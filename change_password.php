@@ -62,8 +62,8 @@ if (isset($_POST['change'])) {
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tukar Password</title>
-<link rel="stylesheet" href="assets/css/style.css?v=8">
-<link rel="stylesheet" href="assets/css/theme.css?v=8">
+<link rel="stylesheet" href="assets/css/style.css?v=9">
+<link rel="stylesheet" href="assets/css/theme.css?v=9">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
 </head>
 <body class="auth-body">
@@ -106,6 +106,6 @@ Tukar Kata Laluan
 </div>
 </div>
 
-<script src="assets/js/ui.js?v=8" defer></script>
+<script src="assets/js/ui.js?v=9" defer></script>
 </body>
 </html>

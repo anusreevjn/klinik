@@ -33,8 +33,8 @@ $tahun_beroperasi = (int)date('Y') - 1997;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= e($nama_klinik) ?></title>
-    <link rel="stylesheet" href="assets/css/style.css?v=8">
-<link rel="stylesheet" href="assets/css/theme.css?v=8">
+    <link rel="stylesheet" href="assets/css/style.css?v=9">
+<link rel="stylesheet" href="assets/css/theme.css?v=9">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
 </head>
 <body>
@@ -146,7 +146,24 @@ $tahun_beroperasi = (int)date('Y') - 1997;
     <div class="seksyen-dalam">
         <div class="grid-tentang">
             <div class="gambar-tentang reveal">
-                <img src="<?= e($logo) ?>" alt="Logo <?= e($nama_klinik) ?>">
+                <div class="gigi-pentas">
+                    <svg class="gigi-animasi" viewBox="0 0 120 140" role="img" aria-label="Gigi sihat">
+                        <defs>
+                            <linearGradient id="gigiG" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0" stop-color="#ffffff"/>
+                                <stop offset="1" stop-color="#dbeafe"/>
+                            </linearGradient>
+                        </defs>
+                        <path class="gigi-badan" d="M60 14 C42 14 28 24 26 46 C25 60 30 76 34 94 C37 108 40 126 48 126 C56 126 54 106 60 106 C66 106 64 126 72 126 C80 126 83 108 86 94 C90 76 95 60 94 46 C92 24 78 14 60 14 Z" fill="url(#gigiG)" stroke="#2f6bff" stroke-width="3" stroke-linejoin="round"/>
+                        <ellipse class="gigi-kilat" cx="46" cy="44" rx="7" ry="13" fill="#ffffff" opacity="0.75"/>
+                        <g class="kilau" transform="translate(84 34)">
+                            <path d="M0 -10 L2.5 -2.5 L10 0 L2.5 2.5 L0 10 L-2.5 2.5 L-10 0 L-2.5 -2.5 Z" fill="#22c3e6"/>
+                        </g>
+                        <g class="kilau kilau-2" transform="translate(32 96)">
+                            <path d="M0 -6 L1.6 -1.6 L6 0 L1.6 1.6 L0 6 L-1.6 1.6 L-6 0 L-1.6 -1.6 Z" fill="#4f8cff"/>
+                        </g>
+                    </svg>
+                </div>
                 <div class="lencana-tahun">
                     <strong class="kira-nombor" data-kira="<?= $tahun_beroperasi ?>"><?= $tahun_beroperasi ?></strong>
                     <span>Tahun Pengalaman</span>
@@ -257,6 +274,6 @@ $tahun_beroperasi = (int)date('Y') - 1997;
     </div>
 </div>
 
-<script src="assets/js/ui.js?v=8"></script>
+<script src="assets/js/ui.js?v=9"></script>
 </body>
 </html>

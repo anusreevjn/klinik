@@ -72,8 +72,8 @@ if (isset($_POST['hantar_pautan'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lupa Kata Laluan</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=8">
-<link rel="stylesheet" href="assets/css/theme.css?v=8">
+    <link rel="stylesheet" href="assets/css/style.css?v=9">
+<link rel="stylesheet" href="assets/css/theme.css?v=9">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
 </head>
 <body class="auth-body">
@@ -106,6 +106,6 @@ if (isset($_POST['hantar_pautan'])) {
         <div class="auth-footer"><a href="login.php" class="btn btn-back" style="width:100%"><i class="ti ti-arrow-back-up"></i> Kembali ke Log Masuk</a></div>
     </div>
 </div>
-<script src="assets/js/ui.js?v=8" defer></script>
+<script src="assets/js/ui.js?v=9" defer></script>
 </body>
 </html>
