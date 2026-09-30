@@ -17,6 +17,10 @@
         var toggles = document.querySelectorAll('.menu-btn');
         if (!sidebar || !toggles.length) return;
 
+        // Guna matchMedia supaya JS dan CSS guna breakpoint yang sama (992px),
+        // elak percanggahan sebab window.innerWidth mengira lebar scrollbar.
+        var mq = window.matchMedia('(min-width: 992px)');
+
         var backdrop = document.createElement('div');
         backdrop.className = 'sidebar-backdrop';
         document.body.appendChild(backdrop);
@@ -30,9 +34,11 @@
             btn.addEventListener('click', function (e) {
                 if (btn.tagName === 'A' && btn.getAttribute('href')) return;
                 e.preventDefault();
-                if (window.innerWidth > 991) {
+                if (mq.matches) {
+                    tutupMobile();
                     if (dashboard) dashboard.classList.toggle('sidebar-tutup');
                 } else {
+                    if (dashboard) dashboard.classList.remove('sidebar-tutup');
                     sidebar.classList.toggle('open');
                     backdrop.classList.toggle('show');
                 }
@@ -40,9 +46,19 @@
         });
 
         backdrop.addEventListener('click', tutupMobile);
-        window.addEventListener('resize', function () {
-            if (window.innerWidth > 991) tutupMobile();
-        });
+
+        var bilaTukar = function () {
+            if (mq.matches) {
+                tutupMobile();
+            } else if (dashboard) {
+                dashboard.classList.remove('sidebar-tutup');
+            }
+        };
+        if (mq.addEventListener) {
+            mq.addEventListener('change', bilaTukar);
+        } else if (mq.addListener) {
+            mq.addListener(bilaTukar);
+        }
     }
 
     var petaIkon = {
