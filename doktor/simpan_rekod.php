@@ -11,21 +11,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_pesakit     = (int)($_POST['id_pesakit'] ?? 0);
     $id_temu_janji  = (int)($_POST['id_temu_janji'] ?? 0);
     $id_temu_janji  = $id_temu_janji > 0 ? $id_temu_janji : null;
-    $kod_rawatan    = $_POST['kod_kkm'] ?? ''; 
-    
-    $nama_rawatan   = "Rawatan Pergigian Komprehensif"; 
-    $harga_rawatan  = 0.00;
+    $senarai_rawatan = isset($_POST['rawatan']) && is_array($_POST['rawatan']) ? $_POST['rawatan'] : [];
 
+    $kod_rawatan   = '';
+    $nama_terpilih = [];
+
+    foreach ($senarai_rawatan as $r) {
+        $teks = trim($r['kod'] ?? '');
+        if ($teks === '') {
+            continue;
+        }
+        $bahagian = explode(' - ', $teks, 2);
+        $kod = trim($bahagian[0]);
+        $nama = isset($bahagian[1]) && trim($bahagian[1]) !== '' ? trim($bahagian[1]) : $kod;
+        if ($kod_rawatan === '') {
+            $kod_rawatan = $kod;
+        }
+        $catatan_r = trim($r['catatan'] ?? '');
+        $nama_terpilih[] = $catatan_r !== '' ? ($nama . ' (' . $catatan_r . ')') : $nama;
+    }
+
+    $nama_rawatan  = !empty($nama_terpilih) ? mb_substr(implode(', ', $nama_terpilih), 0, 100) : 'Rawatan Pergigian Komprehensif';
+    $harga_rawatan = 0.00;
     $harga_minimum = null;
     $harga_maksimum = null;
 
-    if (!empty($kod_rawatan)) {
-        $stmt_cari = $conn->prepare("SELECT nama_rawatan, harga, harga_maksimum FROM kod_rawatan WHERE kod_rawatan = ?");
+    if ($kod_rawatan !== '') {
+        $stmt_cari = $conn->prepare("SELECT harga, harga_maksimum FROM kod_rawatan WHERE kod_rawatan = ?");
         $stmt_cari->bind_param("s", $kod_rawatan);
         $stmt_cari->execute();
         $res_cari = $stmt_cari->get_result();
         if ($row_cari = $res_cari->fetch_assoc()) {
-            $nama_rawatan  = $row_cari['nama_rawatan'];
             $harga_rawatan = $row_cari['harga'];
             $harga_minimum = (float)$row_cari['harga'];
             $harga_maksimum = $row_cari['harga_maksimum'] !== null ? (float)$row_cari['harga_maksimum'] : null;
