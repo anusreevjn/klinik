@@ -1,0 +1,9 @@
+env.php
+c_*.txt
+*.sql
+*.bak
+*.log
+storage/bukti/*
+storage/xray/*
+!storage/bukti/.htaccess
+!storage/xray/.htaccess

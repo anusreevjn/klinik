@@ -1,0 +1,14 @@
+Options -Indexes
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+</IfModule>
+
+RedirectMatch 404 /\.(git|env)
+RedirectMatch 404 \.(sql|bak|log|md)$
+RedirectMatch 404 /storage/
+RedirectMatch 404 /env\.php$
+RedirectMatch 404 /env\.example\.php$
