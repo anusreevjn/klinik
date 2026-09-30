@@ -144,7 +144,7 @@ while($kat = mysqli_fetch_assoc($result_kategori)) {
                         <td><?= $row['tarikh_luput'] ?></td>
                         <td>
                             <button class="action-btn edit-btn" onclick="bukaModalEditUbat('<?= $row['id_inventori'] ?>', '<?= addslashes($row['nama_barang']) ?>', '<?= addslashes($row['kategori']) ?>', '<?= $row['kuantiti_stok'] ?>', '<?= $row['had_minimum_stok'] ?>', '<?= $row['tarikh_luput'] ?>')">Edit</button>
-                            <form method="post" style="display:inline" onsubmit="return confirm('Pasti mahu padam?');"><?= csrf_field() ?><button type="submit" name="padam_id" value="<?= (int)$row['id_inventori'] ?>" class="action-btn delete-btn">Padam</button></form>
+                            <form method="post" style="display:inline" onsubmit="return confirm('Pasti mahu padam?');"><?= csrf_field() ?><button type="submit" name="padam_id" value="<?= (int)$row['id_inventori'] ?>" class="action-btn delete-btn">Delete</button></form>
                         </td>
                     </tr>
                     <?php } } else { echo "<tr><td colspan='6' style='text-align:center;'>Tiada rekod</td></tr>"; } ?>
@@ -167,7 +167,7 @@ while($kat = mysqli_fetch_assoc($result_kategori)) {
                     <tr>
                         <td><?= htmlspecialchars($kat['nama_kategori']) ?></td>
                         <td>
-                            <form method="post" style="display:inline" onsubmit="return confirm('Pasti mahu padam kategori ini?');"><?= csrf_field() ?><button type="submit" name="padam_kategori" value="<?= (int)$kat['id_kategori'] ?>" class="action-btn delete-btn">Padam</button></form>
+                            <form method="post" style="display:inline" onsubmit="return confirm('Pasti mahu padam kategori ini?');"><?= csrf_field() ?><button type="submit" name="padam_kategori" value="<?= (int)$kat['id_kategori'] ?>" class="action-btn delete-btn">Delete</button></form>
                         </td>
                     </tr>
                     <?php } } else { echo "<tr><td colspan='2' style='text-align:center;'>Tiada kategori</td></tr>"; } ?>

@@ -119,7 +119,7 @@ mula_halaman($conn, 'Pengurusan Rawatan', 'pentadbir', 'rawatan.php');
                 <td style="max-width:260px"><?= selamat($row['catatan_harga'] ?: '-') ?></td>
                 <td>
                     <a class="action-btn" href="rawatan.php?edit=<?= (int)$row['id_kod'] ?>">Edit</a>
-                    <form method="post" style="display:inline" onsubmit="return confirm('Padam rawatan ini?')"><?= csrf_field() ?><button class="action-btn delete-btn" type="submit" name="padam" value="<?= (int)$row['id_kod'] ?>">Padam</button></form>
+                    <form method="post" style="display:inline" onsubmit="return confirm('Padam rawatan ini?')"><?= csrf_field() ?><button class="action-btn delete-btn" type="submit" name="padam" value="<?= (int)$row['id_kod'] ?>">Delete</button></form>
                 </td>
             </tr>
         <?php } ?>

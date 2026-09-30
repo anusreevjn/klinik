@@ -267,16 +267,16 @@ mula_halaman($conn, 'Pengurusan Pengguna', 'pentadbir', 'pengguna.php', $tindaka
                             <?= csrf_field() ?>
                             <input type="hidden" name="id" value="<?= $id ?>">
                             <?php if ($status === 'Aktif') { ?>
-                                <button class="action-btn btn-back" type="submit" name="tukar_status" value="tidak">Nyahaktif</button>
+                                <button class="action-btn btn-back" type="submit" name="tukar_status" value="tidak">Deactivate</button>
                             <?php } else { ?>
-                                <button class="action-btn" type="submit" name="tukar_status" value="aktif">Aktifkan</button>
+                                <button class="action-btn" type="submit" name="tukar_status" value="aktif">Activate</button>
                             <?php } ?>
                         </form>
                     <?php } ?>
                     <form method="post" style="display:inline" onsubmit="return confirm('Padam pengguna ini secara kekal?')">
                         <?= csrf_field() ?>
                         <input type="hidden" name="id" value="<?= $id ?>">
-                        <button class="action-btn delete-btn" type="submit" name="padam" value="1">Padam</button>
+                        <button class="action-btn delete-btn" type="submit" name="padam" value="1">Delete</button>
                     </form>
                 </td>
             </tr>

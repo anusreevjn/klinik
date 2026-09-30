@@ -130,8 +130,13 @@ mula_halaman($conn, 'Tetapan Sistem', 'pentadbir', 'tetapan.php');
             <?php if ($nama_kumpulan === 'klinik') { ?>
                 <div class="form-group">
                     <label>Logo Klinik</label>
-                    <input type="file" name="logo" class="form-control" accept="image/png, image/jpeg, image/webp">
-                    <p>Logo semasa: <?= selamat(tetapan($conn, 'logo_klinik', 'tiada')) ?></p>
+                    <label class="upload-kotak" for="logo_input">
+                        <i class="ti ti-cloud-upload" aria-hidden="true"></i>
+                        <span class="upload-teks">Klik untuk muat naik logo</span>
+                        <span class="upload-nama" id="logo_nama">PNG, JPG atau WEBP (maksimum 2MB)</span>
+                        <input type="file" id="logo_input" name="logo" accept="image/png, image/jpeg, image/webp" hidden>
+                    </label>
+                    <p class="upload-semasa">Logo semasa: <?= selamat(tetapan($conn, 'logo_klinik', 'tiada')) ?></p>
                 </div>
             <?php } ?>
         </div>

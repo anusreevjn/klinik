@@ -148,12 +148,12 @@ mula_halaman($conn, 'Jenis X-Ray', 'pentadbir', 'jenis_xray.php');
                         <?= csrf_field() ?>
                         <input type="hidden" name="nilai_status" value="<?= $row['status_aktif'] === 'Aktif' ? 'Tidak Aktif' : 'Aktif' ?>">
                         <button class="action-btn <?= $row['status_aktif'] === 'Aktif' ? 'btn-back' : '' ?>" type="submit" name="tukar_status" value="<?= (int)$row['id_jenis'] ?>">
-                            <?= $row['status_aktif'] === 'Aktif' ? 'Nonaktifkan' : 'Aktifkan' ?>
+                            <?= $row['status_aktif'] === 'Aktif' ? 'Deactivate' : 'Activate' ?>
                         </button>
                     </form>
                     <form method="post" style="display:inline" onsubmit="return confirm('Padam jenis ini?')">
                         <?= csrf_field() ?>
-                        <button class="action-btn delete-btn" type="submit" name="padam" value="<?= (int)$row['id_jenis'] ?>">Padam</button>
+                        <button class="action-btn delete-btn" type="submit" name="padam" value="<?= (int)$row['id_jenis'] ?>">Delete</button>
                     </form>
                 </td>
             </tr>

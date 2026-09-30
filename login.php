@@ -64,8 +64,8 @@ if (isset($_POST['login'])) {
 <head>
 <title>Log Masuk Pesakit</title>
 
-<link rel="stylesheet" href="assets/css/style.css">
-<link rel="stylesheet" href="assets/css/theme.css">
+<link rel="stylesheet" href="assets/css/style.css?v=5">
+<link rel="stylesheet" href="assets/css/theme.css?v=5">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -76,6 +76,7 @@ if (isset($_POST['login'])) {
 
 <div class="auth-card">
 
+<div class="auth-logo"><img src="assets/image/logo.jpg" alt="Logo Klinik"></div>
 <h1>Klinik Pergigian Dr. Arifin</h1>
 <p class="subtitle">Log Masuk Pesakit</p>
 
@@ -95,22 +96,23 @@ if (isset($_POST['login'])) {
             <input type="password" id="password" name="password" class="form-control" placeholder="Kata laluan anda" required>
         </div>
 
-<button type="submit" name="login" class="btn-login">
-Log Masuk
-</button>
+<button type="submit" name="login" class="btn-login">Log Masuk</button>
 
 </form>
 
+<div class="auth-links">
+    <a href="lupa_password.php" class="btn btn-outline"><i class="ti ti-lock-question"></i> Lupa Kata Laluan</a>
+    <a href="register.php" class="btn btn-outline"><i class="ti ti-user-plus"></i> Daftar Akaun Baru</a>
+</div>
+
 <div class="auth-footer">
-    <p><a href="lupa_password.php">Lupa Kata Laluan?</a></p>
-    <p style="margin-top:12px;">Belum ada akaun? <a href="register.php">Daftar Akaun Baru</a></p>
-    <p style="margin-top:12px;"><a href="index.php">&larr; Kembali ke Halaman Utama</a></p>
+    <a href="index.php">&larr; Kembali ke Halaman Utama</a>
 </div>
 
 </div>
 
 </div>
 
-<script src="assets/js/ui.js" defer></script>
+<script src="assets/js/ui.js?v=5" defer></script>
 </body>
 </html>

@@ -82,14 +82,15 @@ $email_diisi = isset($_POST['email']) ? e($_POST['email']) : '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log Masuk Staf - Klinik Pergigian Dr Arifin</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/theme.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=5">
+    <link rel="stylesheet" href="assets/css/theme.css?v=5">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
 </head>
 <body class="auth-body">
 <div class="auth-container">
     <div class="auth-card">
 
+        <div class="auth-logo"><img src="assets/image/logo.jpg" alt="Logo Klinik"></div>
         <h1>Sistem Klinik Dr. Arifin</h1>
         <p class="subtitle">Log Masuk Kakitangan / Doktor / Pentadbir</p>
 
@@ -122,13 +123,16 @@ $email_diisi = isset($_POST['email']) ? e($_POST['email']) : '';
             <button type="submit" name="login_staff" class="btn-login">Log Masuk</button>
         </form>
 
+        <div class="auth-links">
+            <a href="lupa_password.php" class="btn btn-outline"><i class="ti ti-lock-question"></i> Lupa Kata Laluan</a>
+        </div>
+
         <div class="auth-footer">
-            <a href="lupa_password.php">Lupa Kata Laluan?</a>
-            <p style="margin-top:14px;"><a href="index.php">&larr; Kembali ke Halaman Utama</a></p>
+            <a href="index.php">&larr; Kembali ke Halaman Utama</a>
         </div>
 
     </div>
 </div>
-<script src="assets/js/ui.js" defer></script>
+<script src="assets/js/ui.js?v=5" defer></script>
 </body>
 </html>

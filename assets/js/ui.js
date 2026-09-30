@@ -223,9 +223,24 @@
         });
     }
 
+    function initMuatNaik() {
+        document.querySelectorAll('.upload-kotak input[type="file"]').forEach(function (input) {
+            var kotak = input.closest('.upload-kotak');
+            var papar = kotak ? kotak.querySelector('.upload-nama') : null;
+            if (!papar) return;
+            input.addEventListener('change', function () {
+                if (input.files && input.files.length) {
+                    papar.textContent = input.files[0].name;
+                    kotak.classList.add('ada-fail');
+                }
+            });
+        });
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
         suntikButangTerapung();
         initSidebar();
+        initMuatNaik();
         initActiveLink();
         hiasSidebar();
         initHeaderShrink();
