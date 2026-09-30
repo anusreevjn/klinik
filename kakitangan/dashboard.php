@@ -1,6 +1,7 @@
 <?php
 require_once '../config.php';
 require_once '../include/helpers.php';
+require_once '../include/layout.php';
 
 guard($conn, 'kakitangan', '../staff_login.php');
 
@@ -27,110 +28,52 @@ if (!empty($search)) {
 $sql .= " ORDER BY temu_janji.tarikh_temu_janji ASC, temu_janji.masa_temu_janji ASC";
 $result = mysqli_query($conn, $sql);
 ?>
-<!DOCTYPE html>
-<html lang="ms">
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Kakitangan</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-<link rel="stylesheet" href="../assets/css/theme.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
-    <style>
-        .dashboard { display: flex; min-height: 100vh; }
-        .main { flex: 1; padding: 20px; background: #f4f7f6; }
-        .card { background: white; padding: 15px; margin-bottom: 10px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        
-        .btn { display: inline-block; padding: 6px 10px; margin-right: 5px; background: #0f766e; color: white; border-radius: 6px; text-decoration: none; font-size: 14px;}
-        .btn:hover { background: #0c5e56; }
-        .btn-bayar { background: #eab308; color: black; font-weight:bold; }
-        .btn-bayar:hover { background: #ca8a04; color: white;}
+<?php mula_halaman($conn, 'Papan Utama', 'kakitangan', 'dashboard.php'); ?>
 
-        .search-box { margin-bottom: 20px; }
-        .status { font-weight: bold; }
-        
-        .menunggu { color: #f59e0b; } 
-        .disahkan { color: #3b82f6; } 
-        .dipanggil { color: #a855f7; } 
-        .selesai { color: #10b981; } 
-        .telah { color: #16a34a; } 
+<style>
+    .notif-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:9999}
+    .notif-content{background:var(--c-surface);width:min(450px,92vw);margin:15vh auto;padding:30px;border-radius:12px;text-align:center;box-shadow:var(--shadow-lg);border-top:8px solid var(--c-primary)}
+</style>
 
-        /* CSS BARU UNTUK MODAL NOTIFIKASI */
-        .notif-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; }
-        .notif-content { background: white; width: 450px; margin: 15vh auto; padding: 30px; border-radius: 12px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.2); border-top: 8px solid #4f46e5; }
-        .btn-notif-action { background: #4f46e5; color: white; padding: 10px 20px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px; margin-top: 15px; width: 100%; }
-        .btn-notif-action:hover { background: #4338ca; }
-    </style>
-</head>
-<body>
-<div class="dashboard">
-    <div class="sidebar">
-        <div class="sidebar-logo">
-            <img src="../assets/image/logo.jpg" alt="Logo">
-            <h2>Klinik Dr Arifin</h2>
-        </div>
-        <p style="font-size:13px; opacity:0.9; text-align:center; margin-bottom:10px;">
-            Portal Kakitangan<br>
-            <b><?= $user['nama_kakitangan'] ?? 'Staff' ?></b>
-        </p>
-        <a href="dashboard.php" class="active"> Papan Pemuka</a>
-        <a href="pembayaran.php"> Pembayaran</a>
-        <a href="pembayaran.php"> Invois</a>
-        <a href="profil.php"> Profil</a>
-        <a href="../logout.php"> Log Keluar</a>
-    </div>
+<div class="card">
+    <h3 class="card-title">Senarai Temu Janji</h3>
 
-    <div class="main">
-        <h2>Senarai Temu Janji</h2>
-        
-        <div class="search-box">
-            <form method="GET" action="">
-                <input type="text" name="search" placeholder="Cari nama pesakit..." value="<?= htmlspecialchars($search) ?>" style="padding:8px; width:250px; border-radius:6px; border:1px solid #ccc;">
-                <button type="submit" class="btn">Cari</button>
-            </form>
-        </div>
+    <form method="GET" action="" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
+        <input type="text" name="search" class="form-control" placeholder="Cari nama pesakit..." value="<?= e($search) ?>" style="max-width:280px;">
+        <button type="submit" class="btn">Cari</button>
+    </form>
 
-        <?php if (!$result || mysqli_num_rows($result) == 0): ?>
-            <div style="background:white; padding:20px; text-align:center; border-radius:8px; color:#666;">
-                Tiada rekod temu janji ditemui.
-            </div>
-        <?php else: ?>
-            <?php 
-            $current_date = '';
-            while($row = mysqli_fetch_assoc($result)) { 
-                if($row['tarikh_temu_janji'] !== $current_date) {
-                    $current_date = $row['tarikh_temu_janji'];
-                    echo "<h3 style='margin-top:20px; color:#333; border-bottom:2px solid #ddd; padding-bottom:5px;'>Tarikh: " . date("d-m-Y", strtotime($current_date)) . "</h3>";
-                }
-                
-                $status_class = strtolower($row['status']);
-                if($row['status'] == 'Telah Dibayar') $status_class = 'telah';
-            ?>
-                <div class="card">
-                    <h3 style="margin-top:0; color:#1f2937;"><?= htmlspecialchars($row['nama_pesakit'] ?? 'Pesakit tidak diketahui') ?></h3>
-                    <p style="margin:5px 0; color:#4b5563;"><b>Masa:</b> <?= substr($row['masa_temu_janji'],0,5) ?> | <b>No Giliran:</b> <?= $row['no_giliran'] ?></p>
-                    <p style="margin:5px 0; color:#4b5563;"><b>Jenis:</b> <?= $row['jenis_rawatan'] ?></p>
-                    <p style="margin:5px 0; margin-bottom:15px;"><b>Status:</b> 
-                        <span class="status <?= $status_class ?>"><?= $row['status'] ?></span>
-                    </p>
+    <?php if (!$result || mysqli_num_rows($result) == 0): ?>
+        <p style="color:var(--c-muted)">Tiada rekod temu janji ditemui.</p>
+    <?php else: ?>
+        <?php
+        $current_date = '';
+        while($row = mysqli_fetch_assoc($result)) {
+            if($row['tarikh_temu_janji'] !== $current_date) {
+                $current_date = $row['tarikh_temu_janji'];
+                echo "<h4 style='margin:18px 0 8px;border-bottom:1px solid var(--c-border);padding-bottom:5px;'>Tarikh: " . e(date("d-m-Y", strtotime($current_date))) . "</h4>";
+            }
+        ?>
+            <div class="history-card" style="margin-bottom:10px;">
+                <h3 style="margin-top:0;"><?= e($row['nama_pesakit'] ?? 'Pesakit tidak diketahui') ?></h3>
+                <p style="margin:5px 0;"><b>Masa:</b> <?= e(substr($row['masa_temu_janji'],0,5)) ?> | <b>No Giliran:</b> <?= e($row['no_giliran']) ?></p>
+                <p style="margin:5px 0;"><b>Jenis:</b> <?= e($row['jenis_rawatan']) ?></p>
+                <p style="margin:5px 0 12px;"><b>Status:</b> <span class="badge-status <?= e(kelas_status($row['status'])) ?>"><?= e($row['status']) ?></span></p>
 
-                    <div style="border-top: 1px solid #eee; padding-top: 12px;">
-                        <?php if(in_array($row['status'], ['Menunggu', 'Disahkan'])): ?>
-                            <span style="color: #f59e0b; font-weight: bold; font-size:14px;">⏳ Menunggu Panggilan Doktor</span>
-                            
-                        <?php elseif($row['status'] == 'Dipanggil'): ?>
-                            <span style="color: #6b21a8; font-weight: bold; font-size:14px;">👨‍⚕️ Sedang Dirawat di Bilik Doktor</span>
-                            
-                        <?php elseif($row['status'] == 'Selesai'): ?>
-                            <a href="pembayaran.php?id_t=<?= $row['id_temu_janji'] ?>" class="btn btn-bayar">💰 Bayar & Ambil Ubat</a>
-                            
-                        <?php elseif($row['status'] == 'Telah Dibayar'): ?>
-                            <span style="color: #16a34a; font-weight: bold; font-size:14px;">✅ Rawatan & Pembayaran Selesai</span>
-                        <?php endif; ?>
-                    </div>
+                <div style="border-top:1px solid var(--c-border);padding-top:12px;">
+                    <?php if(in_array($row['status'], ['Menunggu', 'Disahkan'])): ?>
+                        <span style="color:var(--c-warning-fg,#92400e);font-weight:600;">Menunggu Panggilan Doktor</span>
+                    <?php elseif($row['status'] == 'Dipanggil'): ?>
+                        <span style="color:var(--c-primary);font-weight:600;">Sedang Dirawat di Bilik Doktor</span>
+                    <?php elseif($row['status'] == 'Selesai'): ?>
+                        <a href="pembayaran.php?id_t=<?= (int)$row['id_temu_janji'] ?>" class="btn">Bayar &amp; Ambil Ubat</a>
+                    <?php elseif($row['status'] == 'Telah Dibayar'): ?>
+                        <span class="badge-status selesai">Rawatan &amp; Pembayaran Selesai</span>
+                    <?php endif; ?>
                 </div>
-            <?php } ?>
-        <?php endif; ?>
-    </div>
+            </div>
+        <?php } ?>
+    <?php endif; ?>
 </div>
 
 <div id="panggilanModal" class="notif-modal">
@@ -141,8 +84,8 @@ $result = mysqli_query($conn, $sql);
             Sila panggil No. Giliran <b id="notifNo" style="color:#4f46e5; font-size:18px;"></b>:<br>
             <span id="notifNama" style="font-weight: bold; font-size: 20px; color: #111827; text-transform: uppercase;"></span>
         </p>
-        <p style="font-size: 13px; color: #9ca3af;">Doktor sedang menunggu pesakit ini di dalam bilik.</p>
-        <button class="btn-notif-action" id="btnSelesaiPanggil"> Selesai Panggil Pesakit</button>
+        <p style="font-size: 13px; color: var(--c-muted);">Doktor sedang menunggu pesakit ini di dalam bilik.</p>
+        <button class="btn-login" id="btnSelesaiPanggil" style="margin-top:15px;">Selesai Panggil Pesakit</button>
     </div>
 </div>
 
@@ -199,6 +142,4 @@ document.getElementById('btnSelesaiPanggil').addEventListener('click', async fun
 setInterval(semakPanggilanDoktor, 5000);
 </script>
 
-<script src="../assets/js/ui.js" defer></script>
-</body>
-</html>
+<?php tamat_halaman(); ?>

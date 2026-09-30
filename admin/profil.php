@@ -1,6 +1,7 @@
 <?php
 require_once '../config.php';
 require_once '../include/helpers.php';
+require_once '../include/layout.php';
 
 guard($conn, 'pentadbir', '../staff_login.php');
 
@@ -66,156 +67,41 @@ $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
 ?>
 
-<!DOCTYPE html>
-<html lang="ms">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Profil Pentadbir</title>
+<?php mula_halaman($conn, 'Profil Saya', 'pentadbir', 'profil.php'); ?>
 
-<link rel="stylesheet" href="../assets/css/style.css">
-<link rel="stylesheet" href="../assets/css/theme.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
+<a href="dashboard.php" class="btn-back" style="margin-bottom:14px;">&larr; Kembali ke Papan Utama</a>
 
-<style>
-.dashboard{display:flex;}
-.main{margin-left:260px;padding:20px;width:100%;}
+<div class="card" style="max-width:720px;">
+    <h3 class="card-title">Maklumat Pentadbir</h3>
 
-.profile-card{
-    background:white;
-    padding:25px;
-    border-radius:12px;
-    box-shadow:0 2px 10px rgba(0,0,0,0.1);
-    max-width:700px;
-}
+    <?php if ($message) { ?>
+        <div class="alert <?= strpos($message,'berjaya')!==false ? 'success' : 'error' ?>"><?= e($message) ?></div>
+    <?php } ?>
 
-.profile-item{margin-bottom:12px;}
-.profile-item label{font-weight:bold;display:block;margin-bottom:5px;}
+    <form method="POST"><?= csrf_field() ?>
 
-.profile-item input{
-    width:100%;
-    padding:10px;
-    border:1px solid #ddd;
-    border-radius:8px;
-}
+        <div class="form-group">
+            <label for="nama_pentadbir">Nama</label>
+            <input type="text" id="nama_pentadbir" name="nama_pentadbir" class="form-control" value="<?= e($user['nama_pentadbir']) ?>">
+        </div>
 
-.btn-save{
-    background:#0f766e;
-    color:white;
-    border:none;
-    padding:10px 15px;
-    border-radius:8px;
-    cursor:pointer;
-}
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-control" value="<?= e($user['email']) ?>">
+        </div>
 
-.btn-save:hover{background:#115e59;}
+        <div class="form-group">
+            <label for="no_telefon">No Telefon</label>
+            <input type="text" id="no_telefon" name="no_telefon" class="form-control" value="<?= e($user['no_telefon']) ?>">
+        </div>
 
-.btn-back{
-    display:inline-block;
-    margin-bottom:15px;
-    padding:8px 12px;
-    background:#374151;
-    color:white;
-    border-radius:8px;
-    text-decoration:none;
-}
+        <div class="form-group">
+            <label for="jawatan">Jawatan</label>
+            <input type="text" id="jawatan" name="jawatan" class="form-control" value="<?= e($user['jawatan']) ?>">
+        </div>
 
-.btn-back:hover{
-    background:#111827;
-}
-
-.success{
-    background:#dcfce7;
-    padding:10px;
-    border-radius:8px;
-    color:#166534;
-    margin-bottom:10px;
-}
-
-.error{
-    background:#fee2e2;
-    padding:10px;
-    border-radius:8px;
-    color:#991b1b;
-    margin-bottom:10px;
-}
-</style>
-
-</head>
-
-<body>
-
-<div class="dashboard">
-
-<!-- SIDEBAR -->
-<div class="sidebar">
-
-<h2>Klinik Dr Arifin</h2>
-
-<p>
-Pentadbir:<br>
-<b><?= htmlspecialchars($user['nama_pentadbir']) ?></b>
-</p>
-
-<a href="dashboard.php"> Dashboard</a>
-        <a href="tambah_doktor.php"> Tambah Doktor</a>
-        <a href="tambah_kakitangan.php"> Tambah Kakitangan</a>
-<a href="profil.php" class="active"> Profil</a>
-<a href="inventori.php"> Inventori</a>
-        <a href="laporan.php"> Laporan</a>
-<a href="../logout.php"> Log Keluar</a>
-
+        <button type="submit" name="update_profile" class="btn-login">Kemaskini Profil</button>
+    </form>
 </div>
 
-<!-- MAIN -->
-<div class="main">
-
-<!-- BACK BUTTON -->
-<a href="dashboard.php" class="btn-back">⬅ Kembali ke Dashboard</a>
-
-<h2>Profil Pentadbir</h2>
-
-<div class="profile-card">
-
-<?php if ($message) { ?>
-    <div class="<?= strpos($message,'berjaya')!==false ? 'success' : 'error' ?>">
-        <?= $message ?>
-    </div>
-<?php } ?>
-
-<form method="POST"><?= csrf_field() ?>
-
-    <div class="profile-item">
-        <label>Nama</label>
-        <input type="text" name="nama_pentadbir" value="<?= htmlspecialchars($user['nama_pentadbir']) ?>">
-    </div>
-
-    <div class="profile-item">
-        <label>Email</label>
-        <input type="email" name="email" value="<?= htmlspecialchars($user['email']) ?>">
-    </div>
-
-    <div class="profile-item">
-        <label>No Telefon</label>
-        <input type="text" name="no_telefon" value="<?= htmlspecialchars($user['no_telefon']) ?>">
-    </div>
-
-    <div class="profile-item">
-        <label>Jawatan</label>
-        <input type="text" name="jawatan" value="<?= htmlspecialchars($user['jawatan']) ?>">
-    </div>
-
-    <button type="submit" name="update_profile" class="btn-save">
-        Kemaskini Profil
-    </button>
-
-</form>
-
-</div>
-
-</div>
-</div>
-
-<script src="../assets/js/ui.js" defer></script>
-</body>
-</html>
+<?php tamat_halaman(); ?>

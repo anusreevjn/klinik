@@ -1,6 +1,7 @@
 <?php
 require_once '../config.php';
 require_once '../include/helpers.php';
+require_once '../include/layout.php';
 
 $id_doktor_sesi = guard($conn, 'doktor', '../staff_login.php');
 
@@ -38,52 +39,37 @@ if (isset($_POST['submit'])) {
 
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Konsultasi</title>
-<link rel="stylesheet" href="../assets/css/style.css">
-<link rel="stylesheet" href="../assets/css/theme.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
-</head>
-<body>
+<?php mula_halaman($conn, 'Konsultasi Pesakit', 'doktor', 'consultation.php'); ?>
 
-<div class="container">
+<div class="card" style="max-width:720px;">
+    <h3 class="card-title">Konsultasi Pesakit</h3>
 
-<div class="card">
+    <?php if ($message !== '') { ?>
+        <div class="alert <?= strpos($message,'berjaya') !== false ? 'success' : 'error' ?>"><?= e($message) ?></div>
+    <?php } ?>
+    <?php if ($temu_janji) { ?>
+        <div class="profile-item"><span class="info-label">Pesakit</span><span><?= e($temu_janji['nama_pesakit']) ?> | <?= e($temu_janji['jenis_rawatan']) ?></span></div>
+    <?php } ?>
 
-<h2>Konsultasi Pesakit</h2>
+    <form method="POST"><?= csrf_field() ?>
 
-<?php if ($message !== '') { ?><div class="alert"><?= e($message) ?></div><?php } ?>
-<?php if ($temu_janji) { ?><div class="profile-item"><span class="info-label">Pesakit</span><span><?= e($temu_janji['nama_pesakit']) ?> | <?= e($temu_janji['jenis_rawatan']) ?></span></div><?php } ?>
+        <div class="form-group">
+            <label for="simptom">Simptom</label>
+            <textarea id="simptom" name="simptom" class="form-control"></textarea>
+        </div>
 
-<form method="POST"><?= csrf_field() ?>
+        <div class="form-group">
+            <label for="diagnosis">Diagnosis</label>
+            <textarea id="diagnosis" name="diagnosis" class="form-control"></textarea>
+        </div>
 
-<div class="form-group">
-<label>Simptom</label>
-<textarea name="simptom" class="form-control"></textarea>
+        <div class="form-group">
+            <label for="cadangan">Cadangan Doktor</label>
+            <textarea id="cadangan" name="cadangan" class="form-control"></textarea>
+        </div>
+
+        <button type="submit" name="submit" class="btn-login">Simpan Konsultasi</button>
+    </form>
 </div>
 
-<div class="form-group">
-<label>Diagnosis</label>
-<textarea name="diagnosis" class="form-control"></textarea>
-</div>
-
-<div class="form-group">
-<label>Cadangan Doktor</label>
-<textarea name="cadangan" class="form-control"></textarea>
-</div>
-
-<button type="submit" name="submit" class="btn">
-Simpan Konsultasi
-</button>
-
-</form>
-
-</div>
-</div>
-
-<script src="../assets/js/ui.js" defer></script>
-</body>
-</html>
+<?php tamat_halaman(); ?>

@@ -1,6 +1,7 @@
 <?php
 require_once '../config.php';
 require_once '../include/helpers.php';
+require_once '../include/layout.php';
 
 guard($conn, 'doktor', '../staff_login.php');
 
@@ -37,76 +38,32 @@ $result = mysqli_query($conn, $sql);
 $nama_pengguna = $_SESSION['nama_doktor'] ?? 'Doktor';
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sejarah Rawatan</title>
-<link rel="stylesheet" href="../assets/css/style.css">
-<link rel="stylesheet" href="../assets/css/theme.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
+<?php mula_halaman($conn, 'Sejarah Rawatan', 'doktor', 'sejarah_rawatan.php'); ?>
+
 <style>
-/* CSS kekal sama macam yang anda buat sebelum ni */
-.card{ background:white; padding:15px; margin-bottom:10px; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
-.btn{ padding:6px 10px; background:#0f766e; color:white; border:none; border-radius:6px; cursor:pointer; }
-.modal{ display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:999; }
-.modal-content{ background:white; width:600px; margin:60px auto; padding:20px; border-radius:10px; max-height:80vh; overflow-y:auto; }
-.search-container { display: flex; align-items: center; width: 100%; max-width: 600px; background: white; padding: 10px 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; border: 1px solid #e5e7eb; }
-.search-icon { color: #6b7280; margin-right: 12px; }
-#searchPatient { border: none; outline: none; width: 100%; font-size: 15px; background: transparent; }
+.search-container{display:flex;align-items:center;width:100%;max-width:600px;background:var(--c-surface);padding:10px 15px;border-radius:var(--radius);box-shadow:var(--shadow-xs);margin-bottom:20px;border:1px solid var(--c-border)}
+.search-icon{color:var(--c-muted);margin-right:12px}
+#searchPatient{border:none;outline:none;width:100%;font-size:15px;background:transparent;color:var(--c-text)}
 </style>
-</head>
 
-<body>
+<a href="dashboard.php" class="btn-back" style="margin-bottom:14px;">&larr; Kembali ke Papan Utama</a>
 
-<div class="dashboard">
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-        <div class="sidebar-logo">
-            <img src="../assets/image/logo.jpg" alt="Logo">
-            <h2>Klinik Dr Arifin</h2>
-        </div>
-        <p style="font-size:13px; opacity:0.9; text-align:center; margin-bottom:10px;">
-            Portal Doktor<br>
-            <b><?= htmlspecialchars($nama_pengguna) ?></b>
-        </p>
-        <a href="dashboard.php"> Dashboard</a>
-        <a href="dashboard.php"> Senarai Pesakit</a>
-        <a href="dashboard.php"> Jadual Temu Janji</a>
-        <a href="rekod_rawatan.php"> Rekod Rawatan</a>
-        <a href="sejarah_rawatan.php" class="active"> Sejarah Rawatan</a>
-        <a href="profil.php"> Profil</a>
-        <a href="../logout.php"> Log Keluar</a>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div class="main">
-        <a href="dashboard.php" class="btn-back">⬅ Kembali ke Papan Pemuka</a>
-        <h2>Sejarah Rawatan Pesakit</h2>
-        
-        <div class="search-container">
-            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-            <input type="text" id="searchPatient" onkeyup="searchFunction()" placeholder="Cari nama pesakit...">
-        </div>
-
-        <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-        <div class="card history-card">
-            <h3><?= htmlspecialchars($row['nama_pesakit']) ?></h3>
-            <p><?= $row['tarikh_rawatan'] ?> | Dr <?= htmlspecialchars($row['nama_doktor']) ?></p>
-            
-            <!-- Tukar kos_rawatan ke harga_rawatan -->
-            <p>RM <?= number_format($row['harga_rawatan'], 2) ?></p>
-
-            <button class="btn" onclick='viewDetail(<?= json_encode($row, JSON_HEX_APOS | JSON_HEX_QUOT) ?>)'>
-                Lihat Butiran
-            </button>
-        </div>
-        <?php } ?>
-    </div>
+<div class="search-container">
+    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+    <input type="text" id="searchPatient" onkeyup="searchFunction()" placeholder="Cari nama pesakit...">
 </div>
+
+<?php while ($row = mysqli_fetch_assoc($result)) { ?>
+<div class="card history-card">
+    <h3 class="card-title"><?= e($row['nama_pesakit']) ?></h3>
+    <p><?= e($row['tarikh_rawatan']) ?> | Dr <?= e($row['nama_doktor']) ?></p>
+    <p><b>RM <?= e(number_format($row['harga_rawatan'], 2)) ?></b></p>
+    <button class="btn" onclick='viewDetail(<?= json_encode($row, JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_TAG | JSON_HEX_AMP) ?>)'>Lihat Butiran</button>
+</div>
+<?php } ?>
 
 <!-- MODAL -->
 <div id="modal" class="modal">
@@ -126,7 +83,7 @@ $nama_pengguna = $_SESSION['nama_doktor'] ?? 'Doktor';
 
         <br>
         <button class="btn" onclick="window.print()">Print</button>
-        <button class="btn" style="background:#e03131;" onclick="closeModal()">Tutup</button>
+        <button class="btn btn-batal" onclick="closeModal()">Tutup</button>
     </div>
 </div>
 
@@ -172,6 +129,4 @@ function searchFunction() {
 }
 </script>
 
-<script src="../assets/js/ui.js" defer></script>
-</body>
-</html>
+<?php tamat_halaman(); ?>

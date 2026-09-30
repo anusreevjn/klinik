@@ -1,6 +1,7 @@
 <?php
 require_once '../config.php';
 require_once '../include/helpers.php';
+require_once '../include/layout.php';
 require_once '../include/penjaga_lib.php';
 
 guard($conn, 'pesakit', '../login.php');
@@ -121,167 +122,94 @@ mysqli_stmt_close($stmt);
 
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Temu Janji</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-<link rel="stylesheet" href="../assets/css/theme.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
+<?php mula_halaman($conn, 'Temu Janji', 'pesakit', 'appointment.php'); ?>
 
-    <style>
-        .time-btn{
-            padding:10px;
-            border:1px solid #0f766e;
-            border-radius:10px;
-            cursor:pointer;
-            text-align:center;
-        }
-        .time-btn:hover{
-            background:#0f766e;
-            color:white;
-        }
-        .card-custom{
-            background:white;
-            padding:20px;
-            border-radius:12px;
-            box-shadow:0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom:20px;
-        }
-        .history-card{
-            background:#e2f7f3;
-            border-left:5px solid #0f766e;
-            padding:15px;
-            margin-bottom:10px;
-            border-radius:5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .btn-batal {
-            background: #dc2626;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .btn-batal:hover {
-            background: #b91c1c;
-        }
-    </style>
-</head>
+<style>
+    .time-btn{padding:10px;border:1.5px solid var(--c-border-strong);border-radius:10px;cursor:pointer;text-align:center;background:var(--c-surface);color:var(--c-text);transition:background .15s,color .15s,border-color .15s}
+    .time-btn:hover{background:var(--c-primary-lt);border-color:var(--c-primary)}
+    .time-btn.dipilih{background:var(--c-primary);color:#fff;border-color:var(--c-primary)}
+    .slot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+</style>
 
-<body>
-
-<div class="dashboard">
-    <div class="sidebar">
-        <div class="sidebar-logo">
-            <img src="../assets/image/logo.jpg" alt="Logo">
-            <h2>Klinik Dr Arifin</h2>
-        </div>
-        <a href="dashboard.php"> Dashboard</a>
-        <a href="appointment.php"> Temu Janji</a>
-        <a href="sejarah_rawatan.php"> Sejarah</a>
-        <a href="pembayaran.php"> Pembayaran</a>
-        <a href="profil.php"> Profil</a>
-        <a href="../logout.php"> Log Keluar</a>
-    </div>
-
-    <div class="main">
 <?= pemilih_profil($conn, $id_akaun, $id_pesakit, 'appointment.php') ?>
 
-        <div class="topbar"><h3>Temu Janji</h3></div>
+<?php if(!empty($message)): ?>
+    <div class="alert <?= (strpos($message,'berjaya') !== false || strpos($message,'dibatalkan') !== false) ? 'success' : 'error' ?>"><?= e($message) ?></div>
+<?php endif; ?>
 
-        <?php if(!empty($message)): ?>
-            <div style="background: #f8d7da; color: #721c24; padding: 10px; margin-bottom: 15px; border-radius: 5px;">
-                <?= $message ?>
-            </div>
-        <?php endif; ?>
+<div style="display:flex; gap:22px; flex-wrap:wrap;">
 
-        <div style="display:flex; gap:25px; flex-wrap:wrap;">
+    <div class="card" style="flex:2; min-width:340px;">
+        <h3 class="card-title">Mohon Temu Janji Baharu</h3>
+        <form method="POST"><?= csrf_field() ?>
 
-            <!-- FORM -->
-            <div class="card card-custom" style="flex:2; min-width:350px;">
-                <form method="POST"><?= csrf_field() ?>
-
-                    <label>Tarikh</label>
-                    <input type="date" name="tarikh" id="tarikh"
-                        min="<?= date('Y-m-d') ?>"
-                        required
-                        style="margin-bottom:15px; width:100%;">
-
-                    <label>Masa Slot</label>
-                    <div id="time-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px;">
-                        <p>Pilih tarikh dahulu</p>
-                    </div>
-
-                    <input type="hidden" name="masa" id="selected-time" required>
-
-                    <label style="margin-top:15px; display:block;">Jenis Rawatan</label>
-                    <select name="jenis_rawatan" required style="width:100%; padding:10px;">
-                        <option value="">Pilih</option>
-                        <option value="Pemeriksaan">Pemeriksaan</option>
-                        <option value="Tampalan">Tampalan</option>
-                        <option value="Cabutan">Cabutan</option>
-                    </select>
-
-                    <button type="submit" name="tempah_temujanji"
-                        style="width:100%; padding:10px; margin-top:15px; background:#0f766e; color:white; border:none; cursor:pointer;">
-                        Hantar Temu Janji
-                    </button>
-                </form>
+            <div class="form-group">
+                <label for="tarikh">Tarikh</label>
+                <input type="date" name="tarikh" id="tarikh" class="form-control" min="<?= date('Y-m-d') ?>" required>
             </div>
 
-            <!-- UPCOMING -->
-            <?php if($upcoming): ?>
-            <div class="card card-custom" style="flex:1; min-width:300px; background:#e0f2f1; border-left:5px solid #0f766e; display:flex; flex-direction:column; justify-content:between;">
-                <div>
-                    <h4> Temu Janji Akan Datang</h4>
-                    <p><b>Jenis:</b> <?= $upcoming['jenis_rawatan'] ?></p>
-                    <p><b>Tarikh:</b> <?= $upcoming['tarikh_temu_janji'] ?></p>
-                    <p><b>Masa:</b> <?= substr($upcoming['masa_temu_janji'],0,5) ?></p>
-                    <p><b>Status:</b> <?= $upcoming['status'] ?></p>
+            <div class="form-group">
+                <label>Masa Slot</label>
+                <div id="time-grid" class="slot-grid">
+                    <p style="grid-column:1/-1;color:var(--c-muted)">Pilih tarikh dahulu</p>
                 </div>
-                
-                <!-- Butang batal untuk temu janji akan datang -->
-                <?php if(in_array($upcoming['status'], ['Menunggu', 'Disahkan'])): ?>
-                <form method="POST" onsubmit="return confirm('Adakah anda pasti mahu membatalkan temu janji ini?');" style="margin-top:15px;"><?= csrf_field() ?>
-                    <input type="hidden" name="id_temujanji" value="<?= $upcoming['id_temu_janji'] ?>">
-                    <button type="submit" name="batal_temujanji" class="btn-batal" style="width:100%;">Batal Temu Janji</button>
-                </form>
-                <?php endif; ?>
+                <input type="hidden" name="masa" id="selected-time" required>
             </div>
-            <?php endif; ?>
 
-        </div>
+            <div class="form-group">
+                <label for="jenis_rawatan">Jenis Rawatan</label>
+                <select name="jenis_rawatan" id="jenis_rawatan" class="form-control" required>
+                    <option value="">Pilih</option>
+                    <option value="Pemeriksaan">Pemeriksaan</option>
+                    <option value="Tampalan">Tampalan</option>
+                    <option value="Cabutan">Cabutan</option>
+                </select>
+            </div>
 
-        <!-- ALL -->
-        <div class="card card-custom">
-            <h3>Semua Temu Janji</h3>
-
-            <?php while($row = mysqli_fetch_assoc($result_all)) { ?>
-                <div class="history-card" style="<?= $row['status'] == 'Dibatalkan' ? 'background:#fee2e2; border-left:5px solid #ef4444;' : '' ?>">
-                    <div>
-                        <b><?= $row['jenis_rawatan'] ?></b><br>
-                        Tarikh: <?= $row['tarikh_temu_janji'] ?> |
-                        Masa: <?= substr($row['masa_temu_janji'],0,5) ?><br>
-                        Status: <span style="font-weight:bold; color: <?= $row['status'] == 'Dibatalkan' ? '#dc2626' : '#0f766e' ?>"><?= $row['status'] ?></span>
-                    </div>
-
-                    <!-- Butang batal dalam senarai semua jika status masih aktif -->
-                    <?php if(in_array($row['status'], ['Menunggu', 'Disahkan'])): ?>
-                    <form method="POST" onsubmit="return confirm('Adakah anda pasti mahu membatalkan temu janji ini?');"><?= csrf_field() ?>
-                        <input type="hidden" name="id_temujanji" value="<?= $row['id_temu_janji'] ?>">
-                        <button type="submit" name="batal_temujanji" class="btn-batal">Batal</button>
-                    </form>
-                    <?php endif; ?>
-                </div>
-            <?php } ?>
-        </div>
-
+            <button type="submit" name="tempah_temujanji" class="btn-login">Hantar Temu Janji</button>
+        </form>
     </div>
+
+    <?php if($upcoming): ?>
+    <div class="card" style="flex:1; min-width:280px;">
+        <h3 class="card-title">Temu Janji Akan Datang</h3>
+        <p><b>Jenis:</b> <?= e($upcoming['jenis_rawatan']) ?></p>
+        <p><b>Tarikh:</b> <?= e($upcoming['tarikh_temu_janji']) ?></p>
+        <p><b>Masa:</b> <?= e(substr($upcoming['masa_temu_janji'],0,5)) ?></p>
+        <p><b>Status:</b> <span class="badge-status"><?= e($upcoming['status']) ?></span></p>
+
+        <?php if(in_array($upcoming['status'], ['Menunggu', 'Disahkan'])): ?>
+        <form method="POST" onsubmit="return confirm('Adakah anda pasti mahu membatalkan temu janji ini?');" style="margin-top:14px;"><?= csrf_field() ?>
+            <input type="hidden" name="id_temujanji" value="<?= (int)$upcoming['id_temu_janji'] ?>">
+            <button type="submit" name="batal_temujanji" class="btn-batal" style="width:100%;">Batal Temu Janji</button>
+        </form>
+        <?php endif; ?>
+    </div>
+    <?php endif; ?>
+
+</div>
+
+<div class="card">
+    <h3 class="card-title">Semua Temu Janji</h3>
+    <?php if (mysqli_num_rows($result_all) === 0) { ?>
+        <p style="color:var(--c-muted)">Tiada temu janji direkodkan.</p>
+    <?php } ?>
+    <?php while($row = mysqli_fetch_assoc($result_all)) { ?>
+        <div class="history-card" style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+            <div>
+                <b><?= e($row['jenis_rawatan']) ?></b><br>
+                Tarikh: <?= e($row['tarikh_temu_janji']) ?> |
+                Masa: <?= e(substr($row['masa_temu_janji'],0,5)) ?><br>
+                Status: <span class="badge-status"><?= e($row['status']) ?></span>
+            </div>
+            <?php if(in_array($row['status'], ['Menunggu', 'Disahkan'])): ?>
+            <form method="POST" onsubmit="return confirm('Adakah anda pasti mahu membatalkan temu janji ini?');"><?= csrf_field() ?>
+                <input type="hidden" name="id_temujanji" value="<?= (int)$row['id_temu_janji'] ?>">
+                <button type="submit" name="batal_temujanji" class="btn-batal action-btn">Batal</button>
+            </form>
+            <?php endif; ?>
+        </div>
+    <?php } ?>
 </div>
 
 <script>
@@ -314,12 +242,8 @@ document.getElementById('tarikh').addEventListener('change', async function(){
         } else {
             btn.onclick = () => {
                 selected.value = s;
-                document.querySelectorAll('.time-btn').forEach(b=>{
-                    b.style.background="#fff";
-                    b.style.color="#000";
-                });
-                btn.style.background="#0f766e";
-                btn.style.color="white";
+                document.querySelectorAll('.time-btn').forEach(b=> b.classList.remove('dipilih'));
+                btn.classList.add('dipilih');
             }
         }
 
@@ -328,6 +252,4 @@ document.getElementById('tarikh').addEventListener('change', async function(){
 });
 </script>
 
-<script src="../assets/js/ui.js" defer></script>
-</body>
-</html>
+<?php tamat_halaman(); ?>

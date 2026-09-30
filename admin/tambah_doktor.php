@@ -1,6 +1,7 @@
 <?php
 require_once '../config.php';
 require_once '../include/helpers.php';
+require_once '../include/layout.php';
 
 guard($conn, 'pentadbir', '../staff_login.php');
 
@@ -111,120 +112,64 @@ if (isset($_POST['tambah'])) {
 }
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tambah Doktor</title>
-<link rel="stylesheet" href="../assets/css/style.css">
-<link rel="stylesheet" href="../assets/css/theme.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
+<?php mula_halaman($conn, 'Tambah Doktor', 'pentadbir', 'pengguna.php'); ?>
 
-<style>
-.card{
-    background:white;
-    padding:20px;
-    border-radius:10px;
-    box-shadow:0 2px 10px rgba(0,0,0,0.1);
-}
+<div class="card" style="max-width:720px;">
+    <h3 class="card-title">Tambah Doktor</h3>
 
-.form-control{
-    width:100%;
-    padding:10px;
-    margin-bottom:10px;
-    border:1px solid #ddd;
-    border-radius:8px;
-}
+    <?php if ($message != "") { ?>
+        <div class="alert <?= strpos($message,'berjaya')!==false ? 'success' : 'error' ?>"><?= e($message) ?></div>
+    <?php } ?>
 
-.btn-login{
-    background:#0f766e;
-    color:white;
-    padding:10px 15px;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-}
+    <form method="POST"><?= csrf_field() ?>
 
-.btn-login:hover{
-    background:#115e59;
-}
+        <div class="form-group">
+            <label for="nama">Nama Doktor</label>
+            <input type="text" id="nama" name="nama" class="form-control" required>
+        </div>
 
-.alert{
-    padding:10px;
-    background:#e2f7f3;
-    margin-bottom:10px;
-    border-radius:8px;
-}
-</style>
+        <div class="form-group">
+            <label for="lesen">No Lesen</label>
+            <input type="text" id="lesen" name="lesen" class="form-control" required>
+        </div>
 
-</head>
+        <div class="date-group" style="display:flex;gap:14px;flex-wrap:wrap;">
+            <div class="form-group" style="flex:1;min-width:170px;">
+                <label for="tarikh_lesen">Tarikh Tamat Lesen</label>
+                <input type="date" id="tarikh_lesen" name="tarikh_lesen" class="form-control">
+            </div>
+            <div class="form-group" style="flex:1;min-width:170px;">
+                <label for="tarikh_mula">Tarikh Mula Kerja</label>
+                <input type="date" id="tarikh_mula" name="tarikh_mula" class="form-control">
+            </div>
+            <div class="form-group" style="flex:1;min-width:170px;">
+                <label for="tarikh_tamat">Tarikh Tamat Kerja</label>
+                <input type="date" id="tarikh_tamat" name="tarikh_tamat" class="form-control">
+            </div>
+        </div>
 
-<body>
+        <div class="form-group">
+            <label for="kepakaran">Kepakaran</label>
+            <input type="text" id="kepakaran" name="kepakaran" class="form-control">
+        </div>
 
-<div class="dashboard">
+        <div class="form-group">
+            <label for="telefon">No Telefon</label>
+            <input type="text" id="telefon" name="telefon" class="form-control" placeholder="Contoh: 0123456789">
+        </div>
 
-<div class="sidebar">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-control">
+        </div>
 
-<div class="sidebar-logo">
-<img src="../assets/image/logo.jpg">
-<h2>Klinik Dr Arifin</h2>
+        <div class="form-group">
+            <label for="password">Kata Laluan (min 6)</label>
+            <input type="password" id="password" name="password" class="form-control">
+        </div>
+
+        <button type="submit" name="tambah" class="btn-login">Tambah Doktor</button>
+    </form>
 </div>
 
-<a href="dashboard.php"> Dashboard</a>
-<a href="tambah_doktor.php" class="active"> Tambah Doktor</a>
-<a href="tambah_kakitangan.php"> Tambah Kakitangan</a>
-<a href="inventori.php"> Inventori</a>
-        <a href="laporan.php"> Laporan</a>
-<a href="../logout.php"> Log Keluar</a>
-
-</div>
-
-<div class="main">
-
-<h3>Tambah Doktor</h3>
-
-<?php if ($message != "") { ?>
-<div class="alert">
-    <?= $message ?>
-</div>
-<?php } ?>
-
-<div class="card">
-
-<form method="POST"><?= csrf_field() ?>
-
-<input type="text" name="nama" placeholder="Nama Doktor" class="form-control">
-
-<input type="text" name="lesen" placeholder="No Lesen" class="form-control">
-
-<label>Tarikh Lesen</label>
-<input type="date" name="tarikh_lesen" class="form-control">
-
-<label>Tarikh Mula Kerja</label>
-<input type="date" name="tarikh_mula" class="form-control">
-
-<label>Tarikh Tamat Kerja</label>
-<input type="date" name="tarikh_tamat" class="form-control">
-
-<input type="text" name="kepakaran" placeholder="Kepakaran" class="form-control">
-
-<input type="text" name="telefon" placeholder="No Telefon (contoh: 0123456789)" class="form-control">
-
-<input type="email" name="email" placeholder="Email" class="form-control">
-
-<input type="password" name="password" placeholder="Password (min 6)" class="form-control">
-
-<button type="submit" name="tambah" class="btn-login">
-Tambah Doktor
-</button>
-
-</form>
-
-</div>
-
-</div>
-</div>
-
-<script src="../assets/js/ui.js" defer></script>
-</body>
-</html>
+<?php tamat_halaman(); ?>

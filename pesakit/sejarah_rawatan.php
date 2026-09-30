@@ -1,6 +1,7 @@
 <?php
 require_once '../config.php';
 require_once '../include/helpers.php';
+require_once '../include/layout.php';
 require_once '../include/penjaga_lib.php';
 
 guard($conn, 'pesakit', '../login.php');
@@ -41,68 +42,31 @@ $user_result = $user_sql->get_result();
 $user = $user_result->fetch_assoc();
 ?>
 
-<!DOCTYPE html>
-<html lang="ms">
-<head>
-    <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sejarah Rawatan</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-<link rel="stylesheet" href="../assets/css/theme.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
-    <style>
-        /* Pastikan CSS modal ini ada dalam style.css atau di sini */
-        .modal { display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); }
-        .modal-content { background:white; margin:5% auto; padding:20px; width:80%; max-width:600px; border-radius:10px; }
-    </style>
-</head>
-<body>
+<?php mula_halaman($conn, 'Rekod Rawatan', 'pesakit', 'sejarah_rawatan.php'); ?>
 
-<div class="dashboard">
-    <div class="sidebar">
-        <div class="sidebar-logo">
-            <img src="../assets/image/logo.jpg" alt="Logo Klinik">
-            <h2>Klinik Dr Arifin</h2>
-        </div>
-        <p style="font-size:13px; opacity:0.9; text-align:center; margin-bottom:10px;">
-            Portal Pesakit<br>
-            <b><?= $user['nama_pesakit'] ?></b>
-        </p>
-        <a href="dashboard.php"> Dashboard</a>
-        <a href="appointment.php"> Temu Janji</a>
-        <a href="sejarah_rawatan.php" class="active"> Sejarah</a>
-        <a href="pembayaran.php"> Pembayaran</a>
-        <a href="profil.php"> Profil</a>
-        <a href="../logout.php"> Log Keluar</a>
-    </div>
-
-    <div class="main">
 <?= pemilih_profil($conn, $id_akaun, $id, 'sejarah_rawatan.php') ?>
 
-        <h2>Sejarah Rawatan Anda</h2>
-        <?php while($row = $result->fetch_assoc()) { ?>
-            <div class="card" style="margin-bottom: 15px; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
-                <h3><?= htmlspecialchars($row['nama_rawatan']) ?></h3>
-                <p>Doktor: <?= htmlspecialchars($row['nama_doktor']) ?></p>
-                <p>Tarikh: <?= date("d-m-Y", strtotime($row['tarikh_rawatan'])) ?></p>
-                
-                <button class="btn" onclick='viewDetail(<?= json_encode($row, JSON_HEX_QUOT | JSON_HEX_APOS) ?>)'>
-                    Lihat Butiran
-                </button>
-            </div>
-        <?php } ?>
+<?php if ($result->num_rows === 0) { ?>
+    <div class="card"><p style="color:var(--c-muted)">Tiada rekod rawatan lagi.</p></div>
+<?php } ?>
+<?php while($row = $result->fetch_assoc()) { ?>
+    <div class="card">
+        <h3 class="card-title"><?= e($row['nama_rawatan']) ?></h3>
+        <p>Doktor: <?= e($row['nama_doktor']) ?></p>
+        <p>Tarikh: <?= e(date("d-m-Y", strtotime($row['tarikh_rawatan']))) ?></p>
+        <button class="btn" onclick='viewDetail(<?= json_encode($row, JSON_HEX_QUOT | JSON_HEX_APOS | JSON_HEX_TAG | JSON_HEX_AMP) ?>)'>Lihat Butiran</button>
     </div>
-</div>
+<?php } ?>
 
 <div id="modal" class="modal">
     <div class="modal-content">
-        <h3>REKOD RAWATAN</h3>
+        <h3>Rekod Rawatan</h3>
         <p><b>Doktor:</b> <span id="modal-doktor"></span></p>
         <p><b>Tarikh:</b> <span id="modal-tarikh"></span></p>
         <p><b>Rawatan:</b> <span id="modal-rawatan"></span></p>
         <p><b>Diagnosis:</b> <span id="modal-diagnosis"></span></p>
         <p><b>Preskripsi:</b><br><span id="modal-preskripsi"></span></p>
-        <button class="btn" onclick="closeModal()">Tutup</button>
+        <button class="btn btn-outline" onclick="closeModal()">Tutup</button>
     </div>
 </div>
 
@@ -122,6 +86,4 @@ function closeModal() {
 }
 </script>
 
-<script src="../assets/js/ui.js" defer></script>
-</body>
-</html>
+<?php tamat_halaman(); ?>

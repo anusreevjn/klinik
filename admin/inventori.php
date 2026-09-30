@@ -1,6 +1,7 @@
 <?php
 require_once '../config.php';
 require_once '../include/helpers.php';
+require_once '../include/layout.php';
 
 guard($conn, 'pentadbir', '../staff_login.php');
 
@@ -92,72 +93,23 @@ while($kat = mysqli_fetch_assoc($result_kategori)) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="ms">
-<head>
-    <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventori / Ubat - Klinik Dr Arifin</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-<link rel="stylesheet" href="../assets/css/theme.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
+<?php mula_halaman($conn, 'Pengurusan Inventori', 'pentadbir', 'inventori.php'); ?>
 
-    <style>
-        .header-action { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .btn-primary { background-color: #2563eb; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; text-decoration: none; }
-        .btn-primary:hover { background-color: #1d4ed8; }
-        .table-container { background: white; padding: 20px; border-radius: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        table th { background: #f8fafc; color: #64748b; padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; }
-        table td { padding: 12px; border-bottom: 1px solid #f1f5f9; color: #334155; }
-        .action-btn { padding: 5px 10px; text-decoration: none; border-radius: 4px; font-size: 14px; margin-right: 5px; cursor: pointer; border: none; }
-        .edit-btn { background: #e0f2fe; color: #0284c7; }
-        .delete-btn { background: #fee2e2; color: #dc2626; }
-        .stok-rendah { color: #dc2626; font-weight: bold; }
-        
-        /* Modal Styles */
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); }
-        .modal-content { background-color: #fff; margin: 5% auto; padding: 20px; border-radius: 12px; width: 50%; max-width: 600px; }
-        .close { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: 600; }
-        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
-        .alert { padding: 15px; margin-bottom: 20px; border-radius: 8px; font-weight: bold; background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
-
-        /* Sistem Tabs */
-        .tab-menu { display: flex; gap: 20px; border-bottom: 2px solid #e2e8f0; margin-bottom: 20px; }
-        .tab-link { padding: 10px 0; cursor: pointer; color: #64748b; font-weight: bold; border-bottom: 3px solid transparent; transition: 0.3s; }
-        .tab-link:hover { color: #2563eb; }
-        .tab-link.active { color: #2563eb; border-bottom: 3px solid #2563eb; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-    </style>
-</head>
-
-<body>
-<div class="dashboard">
-
-    <div class="sidebar">
-        <div class="sidebar-logo">
-            <img src="../assets/image/logo.jpg" alt="Logo">
-            <h2>Klinik Dr Arifin</h2>
-        </div>
-        <a href="dashboard.php"> Dashboard</a>
-        <a href="tambah_doktor.php"> Tambah Doktor</a>
-        <a href="tambah_kakitangan.php"> Tambah Kakitangan</a>
-        <a href="inventori.php" class="active"> Inventori</a>
-        <a href="laporan.php"> Laporan</a>
-        <a href="../staff_login.php"> Log Keluar</a>
-    </div>
-
-    <div class="main">
-        <div class="topbar">
-            <h2>Pengurusan Data Ubat & Farmasi</h2>
-        </div>
+<style>
+    .header-action{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+    .tab-menu{display:flex;gap:20px;border-bottom:2px solid var(--c-border);margin-bottom:20px}
+    .tab-link{padding:10px 0;cursor:pointer;color:var(--c-muted);font-weight:600;border-bottom:3px solid transparent}
+    .tab-link:hover{color:var(--c-primary)}
+    .tab-link.active{color:var(--c-primary);border-bottom:3px solid var(--c-primary)}
+    .tab-content{display:none}
+    .tab-content.active{display:block}
+    .stok-rendah{color:var(--c-danger,#dc2626);font-weight:700}
+    .edit-btn{background:var(--c-primary-lt);color:var(--c-primary)}
+</style>
 
         <div class="table-container">
             <?php if (isset($_GET['status'])): ?>
-                <div class="alert">Berjaya mengemaskini sistem pangkalan data!</div>
+                <div class="alert success">Berjaya mengemaskini sistem pangkalan data!</div>
             <?php endif; ?>
 
             <div class="tab-menu">
@@ -223,8 +175,6 @@ while($kat = mysqli_fetch_assoc($result_kategori)) {
             </div>
 
         </div>
-    </div>
-</div>
 
 <div id="modalTambahUbat" class="modal">
     <div class="modal-content">
@@ -347,6 +297,4 @@ while($kat = mysqli_fetch_assoc($result_kategori)) {
     }
 </script>
 
-<script src="../assets/js/ui.js" defer></script>
-</body>
-</html>
+<?php tamat_halaman(); ?>

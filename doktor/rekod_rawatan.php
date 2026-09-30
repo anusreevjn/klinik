@@ -144,23 +144,7 @@ $inisial = strtoupper(substr($nama_parts[0], 0, 1) . (isset($nama_parts[1]) ? su
 <body>
 
 <div class="dashboard">
-    <div class="sidebar">
-        <div class="sidebar-logo">
-            <img src="../assets/image/logo.jpg" alt="Logo">
-            <h2>Klinik Dr Arifin</h2>
-        </div>
-        <p style="font-size:13px; opacity:0.9; text-align:center; margin-bottom:10px;">
-            Portal Doktor<br>
-            <b><?= htmlspecialchars($_SESSION['nama_doktor'] ?? 'Doktor') ?></b>
-        </p>
-        <a href="dashboard.php"> Dashboard</a>
-        <a href="dashboard.php"> Senarai Pesakit</a>
-        <a href="dashboard.php"> Jadual Temu Janji</a>
-        <a href="rekod_rawatan.php" class="active"> Rekod Rawatan</a>
-        <a href="sejarah_rawatan.php"> Sejarah Rawatan</a>
-        <a href="profil.php"> Profil</a>
-        <a href="../logout.php"> Log Keluar</a>
-    </div>
+    <?php require_once '../include/layout.php'; include '../include/sidebar.php'; ?>
 
     <div class="main">
 <?php if (isset($_GET['ralat']) && $_GET['ralat'] === 'harga') { ?>

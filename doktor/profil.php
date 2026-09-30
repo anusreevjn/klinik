@@ -1,6 +1,7 @@
 <?php
 require_once '../config.php';
 require_once '../include/helpers.php';
+require_once '../include/layout.php';
 
 guard($conn, 'doktor', '../staff_login.php');
 
@@ -112,152 +113,64 @@ $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
 ?>
 
-<!DOCTYPE html>
-<html lang="ms">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Profil Doktor</title>
-<link rel="stylesheet" href="../assets/css/style.css">
-<link rel="stylesheet" href="../assets/css/theme.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
+<?php mula_halaman($conn, 'Profil Saya', 'doktor', 'profil.php'); ?>
 
-<style>
-.dashboard{display:flex;}
-.main{margin-left:260px;padding:20px;width:100%;}
+<div class="card" style="max-width:760px;">
+    <h3 class="card-title">Maklumat Doktor</h3>
 
-.profile-card{
-    background:white;
-    padding:25px;
-    border-radius:12px;
-    box-shadow:0 2px 10px rgba(0,0,0,0.1);
-    max-width:750px;
-}
+    <?php if ($message) { ?>
+        <div class="alert <?= strpos($message,'berjaya')!==false ? 'success' : 'error' ?>"><?= e($message) ?></div>
+    <?php } ?>
 
-.profile-item{margin-bottom:12px;}
-.profile-item label{font-weight:bold;display:block;margin-bottom:5px;}
+    <form method="POST"><?= csrf_field() ?>
 
-.profile-item input{
-    width:100%;
-    padding:10px;
-    border:1px solid #ddd;
-    border-radius:8px;
-}
+        <div class="form-group">
+            <label for="nama_doktor">Nama Doktor</label>
+            <input type="text" id="nama_doktor" name="nama_doktor" class="form-control" value="<?= e($user['nama_doktor']) ?>">
+        </div>
 
-.btn-save{
-    background:#0f766e;
-    color:white;
-    border:none;
-    padding:10px 15px;
-    border-radius:8px;
-    cursor:pointer;
-}
+        <div class="form-group">
+            <label for="no_lesen">No Lesen</label>
+            <input type="text" id="no_lesen" name="no_lesen" class="form-control" value="<?= e($user['no_lesen']) ?>">
+        </div>
 
-.btn-save:hover{background:#115e59;}
+        <div class="date-group" style="display:flex;gap:14px;flex-wrap:wrap;">
+            <div class="form-group" style="flex:1;min-width:170px;">
+                <label for="tarikh_tamat_lesen">Tarikh Tamat Lesen</label>
+                <input type="date" id="tarikh_tamat_lesen" name="tarikh_tamat_lesen" class="form-control" value="<?= e($user['tarikh_tamat_lesen']) ?>">
+            </div>
+            <div class="form-group" style="flex:1;min-width:170px;">
+                <label for="tarikh_mula_kerja">Tarikh Mula Kerja</label>
+                <input type="date" id="tarikh_mula_kerja" name="tarikh_mula_kerja" class="form-control" value="<?= e($user['tarikh_mula_kerja']) ?>">
+            </div>
+            <div class="form-group" style="flex:1;min-width:170px;">
+                <label for="tarikh_tamat_kerja">Tarikh Tamat Kerja</label>
+                <input type="date" id="tarikh_tamat_kerja" name="tarikh_tamat_kerja" class="form-control" value="<?= e($user['tarikh_tamat_kerja']) ?>">
+            </div>
+        </div>
 
-.success{background:#dcfce7;padding:10px;border-radius:8px;color:#166534;margin-bottom:10px;}
-.error{background:#fee2e2;padding:10px;border-radius:8px;color:#991b1b;margin-bottom:10px;}
-</style>
-</head>
+        <div class="form-group">
+            <label for="kepakaran">Kepakaran</label>
+            <input type="text" id="kepakaran" name="kepakaran" class="form-control" value="<?= e($user['kepakaran']) ?>">
+        </div>
 
-<body>
+        <div class="form-group">
+            <label for="no_telefon">No Telefon</label>
+            <input type="text" id="no_telefon" name="no_telefon" class="form-control" value="<?= e($user['no_telefon']) ?>">
+        </div>
 
-<div class="dashboard">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-control" value="<?= e($user['email']) ?>">
+        </div>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
+        <div class="form-group">
+            <label for="password_baru">Kata Laluan Baharu (Pilihan)</label>
+            <input type="password" id="password_baru" name="password_baru" class="form-control" placeholder="Isi jika mahu tukar kata laluan">
+        </div>
 
-<div class="sidebar-logo">
-<img src="../assets/image/logo.jpg">
-<h2>Klinik Dr Arifin</h2>
+        <button type="submit" name="update_profile" class="btn-login">Kemaskini Profil</button>
+    </form>
 </div>
 
-<p>
-Doktor:<br>
-<b><?= htmlspecialchars($user['nama_doktor']) ?></b>
-</p>
-
-        <a href="dashboard.php">Dashboard</a>
-        <a href="dashboard.php"> Senarai Pesakit</a>
-        <a href="dashboard.php"> Jadual Temu Janji</a>
-        <a href="rekod_rawatan.php"> Rekod Rawatan</a>
-        <a href="sejarah_rawatan.php"> Sejarah Rawatan</a>
-        <a href="profil.php" class="active"> Profil</a>
-        <a href="../logout.php"> Log Keluar</a>
-
-</div>
-
-<!-- MAIN -->
-<div class="main">
-
-<h2>Profil Doktor</h2>
-
-<div class="profile-card">
-
-<?php if ($message) { ?>
-    <div class="<?= strpos($message,'berjaya')!==false ? 'success' : 'error' ?>">
-        <?= $message ?>
-    </div>
-<?php } ?>
-
-<form method="POST"><?= csrf_field() ?>
-
-<div class="profile-item">
-    <label>Nama Doktor</label>
-    <input type="text" name="nama_doktor" value="<?= htmlspecialchars($user['nama_doktor']) ?>">
-</div>
-
-<div class="profile-item">
-    <label>No Lesen</label>
-    <input type="text" name="no_lesen" value="<?= htmlspecialchars($user['no_lesen']) ?>">
-</div>
-
-<div class="profile-item">
-    <label>Tarikh Tamat Lesen</label>
-    <input type="date" name="tarikh_tamat_lesen" value="<?= $user['tarikh_tamat_lesen'] ?>">
-</div>
-
-<div class="profile-item">
-    <label>Tarikh Mula Kerja</label>
-    <input type="date" name="tarikh_mula_kerja" value="<?= $user['tarikh_mula_kerja'] ?>">
-</div>
-
-<div class="profile-item">
-    <label>Tarikh Tamat Kerja</label>
-    <input type="date" name="tarikh_tamat_kerja" value="<?= $user['tarikh_tamat_kerja'] ?>">
-</div>
-
-<div class="profile-item">
-    <label>Kepakaran</label>
-    <input type="text" name="kepakaran" value="<?= htmlspecialchars($user['kepakaran']) ?>">
-</div>
-
-<div class="profile-item">
-    <label>No Telefon</label>
-    <input type="text" name="no_telefon" value="<?= htmlspecialchars($user['no_telefon']) ?>">
-</div>
-
-<div class="profile-item">
-    <label>Email</label>
-    <input type="email" name="email" value="<?= htmlspecialchars($user['email']) ?>">
-</div>
-
-<div class="profile-item">
-    <label>Password Baru (optional)</label>
-    <input type="password" name="password_baru" placeholder="Isi jika mahu tukar password">
-</div>
-
-<button type="submit" name="update_profile" class="btn-save">
-    Kemaskini Profil
-</button>
-
-</form>
-
-</div>
-
-</div>
-</div>
-
-<script src="../assets/js/ui.js" defer></script>
-</body>
-</html>
+<?php tamat_halaman(); ?>
