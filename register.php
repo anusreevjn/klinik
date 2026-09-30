@@ -103,8 +103,8 @@ if (isset($_POST['daftar'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Akaun Pesakit - <?= e($nama_klinik) ?></title>
-    <link rel="stylesheet" href="assets/css/style.css?v=5">
-    <link rel="stylesheet" href="assets/css/theme.css?v=5">
+    <link rel="stylesheet" href="assets/css/style.css?v=6">
+    <link rel="stylesheet" href="assets/css/theme.css?v=6">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
 </head>
 <body class="auth-body">
@@ -134,7 +134,7 @@ if (isset($_POST['daftar'])) {
                 <div class="form-group" style="flex:1;min-width:180px;">
                     <label for="jantina">Jantina</label>
                     <select id="jantina" name="jantina" class="form-control">
-                        <option value="">-- Pilih --</option>
+                        <option value="">Pilih</option>
                         <option value="Lelaki" <?= $nilai['jantina'] === 'Lelaki' ? 'selected' : '' ?>>Lelaki</option>
                         <option value="Perempuan" <?= $nilai['jantina'] === 'Perempuan' ? 'selected' : '' ?>>Perempuan</option>
                     </select>
@@ -181,6 +181,6 @@ if (isset($_POST['daftar'])) {
 
     </div>
 </div>
-<script src="assets/js/ui.js?v=5" defer></script>
+<script src="assets/js/ui.js?v=6" defer></script>
 </body>
 </html>

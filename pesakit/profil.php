@@ -134,7 +134,7 @@ $user = $stmt->get_result()->fetch_assoc();
             <div class="form-group" style="flex:1;min-width:180px;">
                 <label for="jantina">Jantina</label>
                 <select id="jantina" name="jantina" class="form-control">
-                    <option value="">-- Pilih --</option>
+                    <option value="">Pilih</option>
                     <option value="Lelaki" <?= $user['jantina'] === 'Lelaki' ? 'selected' : '' ?>>Lelaki</option>
                     <option value="Perempuan" <?= $user['jantina'] === 'Perempuan' ? 'selected' : '' ?>>Perempuan</option>
                 </select>

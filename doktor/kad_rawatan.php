@@ -68,8 +68,8 @@ function baris_gigi(array $nombor, array $keadaan): string
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kad Rawatan <?= e($pesakit['nama_pesakit']) ?></title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-<link rel="stylesheet" href="../assets/css/theme.css">
+    <link rel="stylesheet" href="../assets/css/style.css?v=6">
+<link rel="stylesheet" href="../assets/css/theme.css?v=6">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
     <style>
         .kad { border: 1px solid #94a3b8; padding: 22px; background: #fff; }
@@ -161,6 +161,6 @@ function baris_gigi(array $nombor, array $keadaan): string
         <a class="btn btn-back" href="<?= $_SESSION['role'] === 'doktor' ? '../doktor/pesakit.php' : ($_SESSION['role'] === 'kakitangan' ? '../kakitangan/pesakit.php' : '../admin/pengguna.php?tab=pesakit') ?>">Kembali</a>
     </div>
 </div>
-<script src="../assets/js/ui.js" defer></script>
+<script src="../assets/js/ui.js?v=6" defer></script>
 </body>
 </html>

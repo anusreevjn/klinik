@@ -51,8 +51,8 @@ $inisial = strtoupper(substr($nama_parts[0], 0, 1) . (isset($nama_parts[1]) ? su
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rekod Rawatan - Klinik Pergigian Dr. Arifin</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-<link rel="stylesheet" href="../assets/css/theme.css">
+    <link rel="stylesheet" href="../assets/css/style.css?v=6">
+<link rel="stylesheet" href="../assets/css/theme.css?v=6">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
     
     <style>
@@ -288,7 +288,7 @@ $inisial = strtoupper(substr($nama_parts[0], 0, 1) . (isset($nama_parts[1]) ? su
                             <label>Preskripsi Ubat</label>
                             <div style="display:grid; grid-template-columns:2fr 1fr 1fr 2fr auto; gap:10px; margin-bottom:10px;">
                                 <select id="ubat" class="form-control">
-                                    <option value="">-- Pilih Ubat --</option>
+                                    <option value="">Pilih Ubat</option>
                                     <?php while($u = mysqli_fetch_assoc($query_ubat)) { ?>
                                         <option value="<?= htmlspecialchars($u['id_inventori']) ?>">
                                             <?= htmlspecialchars($u['nama_barang']) ?>
@@ -526,6 +526,6 @@ $inisial = strtoupper(substr($nama_parts[0], 0, 1) . (isset($nama_parts[1]) ? su
     }
 </script>
 
-<script src="../assets/js/ui.js" defer></script>
+<script src="../assets/js/ui.js?v=6" defer></script>
 </body>
 </html>

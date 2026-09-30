@@ -82,8 +82,8 @@ $email_diisi = isset($_POST['email']) ? e($_POST['email']) : '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log Masuk Staf - Klinik Pergigian Dr Arifin</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=5">
-    <link rel="stylesheet" href="assets/css/theme.css?v=5">
+    <link rel="stylesheet" href="assets/css/style.css?v=6">
+    <link rel="stylesheet" href="assets/css/theme.css?v=6">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
 </head>
 <body class="auth-body">
@@ -103,7 +103,7 @@ $email_diisi = isset($_POST['email']) ? e($_POST['email']) : '';
             <div class="form-group">
                 <label for="role">Peranan</label>
                 <select id="role" name="role" class="form-control" required>
-                    <option value="">-- Pilih Peranan --</option>
+                    <option value="">Pilih Peranan</option>
                     <option value="pentadbir" <?= $peranan_dipilih === 'pentadbir' ? 'selected' : '' ?>>Pentadbir</option>
                     <option value="kakitangan" <?= $peranan_dipilih === 'kakitangan' ? 'selected' : '' ?>>Kakitangan</option>
                     <option value="doktor" <?= $peranan_dipilih === 'doktor' ? 'selected' : '' ?>>Doktor</option>
@@ -133,6 +133,6 @@ $email_diisi = isset($_POST['email']) ? e($_POST['email']) : '';
 
     </div>
 </div>
-<script src="assets/js/ui.js?v=5" defer></script>
+<script src="assets/js/ui.js?v=6" defer></script>
 </body>
 </html>

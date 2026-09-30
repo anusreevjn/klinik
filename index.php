@@ -33,8 +33,8 @@ $tahun_beroperasi = (int)date('Y') - 1997;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= e($nama_klinik) ?></title>
-    <link rel="stylesheet" href="assets/css/style.css?v=5">
-<link rel="stylesheet" href="assets/css/theme.css?v=5">
+    <link rel="stylesheet" href="assets/css/style.css?v=6">
+<link rel="stylesheet" href="assets/css/theme.css?v=6">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
 </head>
 <body>
@@ -253,6 +253,6 @@ $tahun_beroperasi = (int)date('Y') - 1997;
     </div>
 </div>
 
-<script src="assets/js/ui.js?v=5"></script>
+<script src="assets/js/ui.js?v=6"></script>
 </body>
 </html>
