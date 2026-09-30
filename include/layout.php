@@ -76,8 +76,9 @@ function mula_halaman($conn, $tajuk, $peranan, $aktif, $tindakan = '')
         echo '<a href="' . selamat($item[0]) . '"' . $kelas . '>' . selamat($item[1]) . '</a>';
     }
 
-    echo '</div><div class="main"><div class="topbar"><h3>' . selamat($tajuk) . '</h3>';
-    echo '<div class="header-action"><button class="menu-btn">Menu</button><span class="badge-status">' . selamat($nama_pengguna) . '</span>';
+    echo '</div><div class="main"><div class="topbar">';
+    echo '<div class="topbar-kiri"><button type="button" class="menu-btn" aria-label="Togol menu"><i class="ti ti-menu-2"></i></button><h3>' . selamat($tajuk) . '</h3></div>';
+    echo '<div class="header-action"><span class="badge-status">' . selamat($nama_pengguna) . '</span>';
     echo $tindakan . '</div></div>';
 }
 

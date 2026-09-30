@@ -550,7 +550,11 @@ select.form-control{appearance:none;padding-right:2rem;background-image:linear-g
 .sidebar-backdrop{position:fixed;inset:0;z-index:50;display:none;background:rgba(29,39,59,.45)}
 .sidebar-backdrop.show{display:block}
 
-.jaket-topbar-btn{display:none}
+html,body{overflow-x:clip}
+.main{overflow-x:clip}
+.table-container{overflow-x:auto}
+
+.jaket-topbar-btn{display:inline-flex}
 
 @media(max-width:991px){
     :is(.dashboard){flex-direction:column}
@@ -615,11 +619,11 @@ select.form-control{appearance:none;padding-right:2rem;background-image:linear-g
 .table-container td:last-child,
 .card td:last-child{white-space:nowrap}
 
-.topbar .menu-btn{display:none}
+.topbar-kiri{display:flex;align-items:center;gap:.6rem;min-width:0}
+.topbar .menu-btn{display:inline-flex;align-items:center;justify-content:center;padding:.4rem .55rem;font-size:1.05rem;flex:none}
+.topbar .menu-btn i{font-size:1.15rem;line-height:1}
 
-@media(max-width:991px){
-    .topbar .menu-btn{display:inline-flex}
-}
+@media(min-width:992px){.dashboard.sidebar-tutup .sidebar{display:none}}
 
 .topbar .badge-status{background:var(--c-surface-2);color:var(--c-muted)}
 .topbar .badge-status::before{background:var(--c-success)}
