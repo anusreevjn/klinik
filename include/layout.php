@@ -65,8 +65,8 @@ function mula_halaman($conn, $tajuk, $peranan, $aktif, $tindakan = '')
     echo '<!DOCTYPE html><html lang="ms"><head><meta charset="UTF-8">';
     echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
     echo '<title>' . selamat($tajuk) . ' | ' . selamat($nama_klinik) . '</title>';
-    echo '<link rel="stylesheet" href="../assets/css/style.css?v=9">
-<link rel="stylesheet" href="../assets/css/theme.css?v=9">
+    echo '<link rel="stylesheet" href="../assets/css/style.css?v=10">
+<link rel="stylesheet" href="../assets/css/theme.css?v=10">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">';
     echo '</head><body><div class="dashboard"><div class="sidebar">';
     echo '<div class="sidebar-logo"><img src="' . selamat($logo) . '" alt="Logo"><h2>' . selamat($nama_klinik) . '</h2></div>';
@@ -84,5 +84,5 @@ function mula_halaman($conn, $tajuk, $peranan, $aktif, $tindakan = '')
 
 function tamat_halaman()
 {
-    echo '</div></div><script src="../assets/js/ui.js?v=9"></script></body></html>';
+    echo '</div></div><script src="../assets/js/ui.js?v=10"></script></body></html>';
 }

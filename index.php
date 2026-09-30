@@ -33,8 +33,8 @@ $tahun_beroperasi = (int)date('Y') - 1997;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= e($nama_klinik) ?></title>
-    <link rel="stylesheet" href="assets/css/style.css?v=9">
-<link rel="stylesheet" href="assets/css/theme.css?v=9">
+    <link rel="stylesheet" href="assets/css/style.css?v=10">
+<link rel="stylesheet" href="assets/css/theme.css?v=10">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
 </head>
 <body>
@@ -147,20 +147,45 @@ $tahun_beroperasi = (int)date('Y') - 1997;
         <div class="grid-tentang">
             <div class="gambar-tentang reveal">
                 <div class="gigi-pentas">
-                    <svg class="gigi-animasi" viewBox="0 0 120 140" role="img" aria-label="Gigi sihat">
+                    <svg class="gigi-animasi" viewBox="0 0 200 250" role="img" aria-label="Gigi sihat berkilat">
                         <defs>
-                            <linearGradient id="gigiG" x1="0" y1="0" x2="0" y2="1">
+                            <linearGradient id="gigiBadan" x1="0.2" y1="0" x2="0.8" y2="1">
                                 <stop offset="0" stop-color="#ffffff"/>
-                                <stop offset="1" stop-color="#dbeafe"/>
+                                <stop offset="0.55" stop-color="#eef3fb"/>
+                                <stop offset="1" stop-color="#cdddf1"/>
                             </linearGradient>
+                            <radialGradient id="gigiGloss" cx="0.36" cy="0.26" r="0.55">
+                                <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
+                                <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+                            </radialGradient>
+                            <linearGradient id="gigiShine" x1="0" y1="0" x2="1" y2="0">
+                                <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+                                <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.85"/>
+                                <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+                            </linearGradient>
+                            <clipPath id="gigiClip">
+                                <path d="M100 24 C68 22 44 40 44 74 C44 96 52 112 56 132 C60 150 55 178 66 206 C73 224 86 224 90 204 C93 188 95 168 100 168 C105 168 107 188 110 204 C114 224 127 224 134 206 C145 178 140 150 144 132 C148 112 156 96 156 74 C156 40 132 22 100 24 Z"/>
+                            </clipPath>
+                            <filter id="gigiBlur" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="6"/></filter>
+                            <filter id="gigiSoft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="9"/></filter>
                         </defs>
-                        <path class="gigi-badan" d="M60 14 C42 14 28 24 26 46 C25 60 30 76 34 94 C37 108 40 126 48 126 C56 126 54 106 60 106 C66 106 64 126 72 126 C80 126 83 108 86 94 C90 76 95 60 94 46 C92 24 78 14 60 14 Z" fill="url(#gigiG)" stroke="#2f6bff" stroke-width="3" stroke-linejoin="round"/>
-                        <ellipse class="gigi-kilat" cx="46" cy="44" rx="7" ry="13" fill="#ffffff" opacity="0.75"/>
-                        <g class="kilau" transform="translate(84 34)">
-                            <path d="M0 -10 L2.5 -2.5 L10 0 L2.5 2.5 L0 10 L-2.5 2.5 L-10 0 L-2.5 -2.5 Z" fill="#22c3e6"/>
+
+                        <ellipse class="gigi-bayang" cx="100" cy="234" rx="60" ry="13" fill="#2f6bff" opacity="0.16" filter="url(#gigiSoft)"/>
+
+                        <path d="M100 24 C68 22 44 40 44 74 C44 96 52 112 56 132 C60 150 55 178 66 206 C73 224 86 224 90 204 C93 188 95 168 100 168 C105 168 107 188 110 204 C114 224 127 224 134 206 C145 178 140 150 144 132 C148 112 156 96 156 74 C156 40 132 22 100 24 Z" fill="url(#gigiBadan)" stroke="#bccfe8" stroke-width="1.5"/>
+
+                        <g clip-path="url(#gigiClip)">
+                            <path d="M132 30 C150 44 152 66 150 86 C148 108 140 126 142 150 C144 176 138 196 128 212 L156 212 L162 20 Z" fill="#c2d3ec" opacity="0.55" filter="url(#gigiBlur)"/>
+                            <ellipse cx="78" cy="78" rx="26" ry="44" fill="url(#gigiGloss)"/>
+                            <ellipse cx="66" cy="150" rx="9" ry="22" fill="#ffffff" opacity="0.55"/>
+                            <rect class="gigi-streak" x="-30" y="-40" width="42" height="330" fill="url(#gigiShine)"/>
                         </g>
-                        <g class="kilau kilau-2" transform="translate(32 96)">
-                            <path d="M0 -6 L1.6 -1.6 L6 0 L1.6 1.6 L0 6 L-1.6 1.6 L-6 0 L-1.6 -1.6 Z" fill="#4f8cff"/>
+
+                        <g class="kilau" transform="translate(154 46)">
+                            <path d="M0 -13 L3.2 -3.2 L13 0 L3.2 3.2 L0 13 L-3.2 3.2 L-13 0 L-3.2 -3.2 Z" fill="#ffffff"/>
+                        </g>
+                        <g class="kilau kilau-2" transform="translate(42 40)">
+                            <path d="M0 -8 L2 -2 L8 0 L2 2 L0 8 L-2 2 L-8 0 L-2 -2 Z" fill="#8fb6ff"/>
                         </g>
                     </svg>
                 </div>
@@ -274,6 +299,6 @@ $tahun_beroperasi = (int)date('Y') - 1997;
     </div>
 </div>
 
-<script src="assets/js/ui.js?v=9"></script>
+<script src="assets/js/ui.js?v=10"></script>
 </body>
 </html>
