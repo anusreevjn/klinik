@@ -1,15 +1,14 @@
 (function () {
-    function suntikButangMenu() {
+    function suntikButangTerapung() {
         var sidebar = document.querySelector('.sidebar');
-        var topbar = document.querySelector('.topbar');
-        if (!sidebar || !topbar || topbar.querySelector('.menu-btn')) return;
+        if (!sidebar || document.querySelector('.togol-sidebar')) return;
 
         var butang = document.createElement('button');
         butang.type = 'button';
-        butang.className = 'menu-btn jaket-topbar-btn';
-        butang.setAttribute('aria-label', 'Buka menu');
-        butang.innerHTML = '<i class="ti ti-menu-2"></i>';
-        topbar.insertBefore(butang, topbar.firstChild);
+        butang.className = 'togol-sidebar menu-btn';
+        butang.setAttribute('aria-label', 'Togol menu');
+        butang.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+        document.body.appendChild(butang);
     }
 
     function initSidebar() {
@@ -212,7 +211,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function () {
-        suntikButangMenu();
+        suntikButangTerapung();
         initSidebar();
         initActiveLink();
         hiasSidebar();
