@@ -62,8 +62,8 @@ if (isset($_POST['change'])) {
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tukar Password</title>
-<link rel="stylesheet" href="assets/css/style.css?v=7">
-<link rel="stylesheet" href="assets/css/theme.css?v=7">
+<link rel="stylesheet" href="assets/css/style.css?v=8">
+<link rel="stylesheet" href="assets/css/theme.css?v=8">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
 </head>
 <body class="auth-body">
@@ -99,13 +99,13 @@ Tukar Kata Laluan
 
 <?php if (!$wajib) { ?>
 <div class="auth-footer">
-    <a href="index.php">&larr; Kembali</a>
+    <a href="index.php" class="btn btn-back" style="width:100%"><i class="ti ti-home"></i> Kembali</a>
 </div>
 <?php } ?>
 
 </div>
 </div>
 
-<script src="assets/js/ui.js?v=7" defer></script>
+<script src="assets/js/ui.js?v=8" defer></script>
 </body>
 </html>

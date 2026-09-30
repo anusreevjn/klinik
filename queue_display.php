@@ -65,8 +65,8 @@ if ($sah && isset($_POST['tetapkan'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tetapkan Kata Laluan</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=7">
-<link rel="stylesheet" href="assets/css/theme.css?v=7">
+    <link rel="stylesheet" href="assets/css/style.css?v=8">
+<link rel="stylesheet" href="assets/css/theme.css?v=8">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
 </head>
 <body class="auth-body">
@@ -99,6 +99,6 @@ if ($sah && isset($_POST['tetapkan'])) {
         <?php } ?>
     </div>
 </div>
-<script src="assets/js/ui.js?v=7" defer></script>
+<script src="assets/js/ui.js?v=8" defer></script>
 </body>
 </html>

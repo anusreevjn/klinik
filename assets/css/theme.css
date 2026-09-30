@@ -539,8 +539,20 @@ select.form-control{appearance:none;-webkit-appearance:none;padding-right:2.6rem
 .header-decare.kecil{padding:.55rem 1.5rem;box-shadow:var(--shadow)}
 .menu-decare a{color:var(--c-text);font-size:.875rem;font-weight:500}
 .menu-decare a:hover{color:var(--c-primary)}
-.menu-decare a.btn-tempah::after,.menu-decare a.btn::after{content:none;display:none}
+.menu-decare a::after{content:none;display:none}
 .menu-decare a.btn-tempah,.menu-decare a.btn-tempah:hover{color:#fff}
+
+.nav-togol{display:none;align-items:center;justify-content:center;background:var(--c-surface);border:1px solid var(--c-border-strong);border-radius:10px;padding:7px 9px;cursor:pointer;color:var(--c-text)}
+.nav-togol svg{display:block}
+@media(max-width:900px){
+    .nav-togol{display:inline-flex}
+    .header-decare{flex-wrap:nowrap}
+    .menu-decare{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:2px;background:#fff;border-bottom:1px solid var(--c-border);box-shadow:var(--shadow-md);padding:12px 22px 16px}
+    .menu-decare.buka{display:flex}
+    .menu-decare a{width:100%;padding:12px 6px;border-bottom:1px solid var(--c-border)}
+    .menu-decare a:last-child{border-bottom:0}
+    .menu-decare a.btn-tempah{width:100%;justify-content:center;margin-top:8px}
+}
 .hero-decare{background:linear-gradient(180deg,#f8fbff,#eef4fb);padding:3.5rem 1.5rem 4rem}
 .hero-grid h1{font-size:clamp(1.8rem,4vw,2.9rem);font-weight:700;letter-spacing:-.02em}
 .blob-biru{background:linear-gradient(150deg,var(--c-primary),#4dabf7);opacity:.14}

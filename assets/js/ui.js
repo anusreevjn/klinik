@@ -237,9 +237,23 @@
         });
     }
 
+    function initNavbar() {
+        var togol = document.querySelector('.nav-togol');
+        var menu = document.querySelector('.menu-decare');
+        if (!togol || !menu) return;
+        togol.addEventListener('click', function (e) {
+            e.preventDefault();
+            menu.classList.toggle('buka');
+        });
+        menu.querySelectorAll('a').forEach(function (a) {
+            a.addEventListener('click', function () { menu.classList.remove('buka'); });
+        });
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
         suntikButangTerapung();
         initSidebar();
+        initNavbar();
         initMuatNaik();
         initActiveLink();
         hiasSidebar();

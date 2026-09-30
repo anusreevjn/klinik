@@ -82,8 +82,8 @@ $email_diisi = isset($_POST['email']) ? e($_POST['email']) : '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log Masuk Staf - Klinik Pergigian Dr Arifin</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=7">
-    <link rel="stylesheet" href="assets/css/theme.css?v=7">
+    <link rel="stylesheet" href="assets/css/style.css?v=8">
+    <link rel="stylesheet" href="assets/css/theme.css?v=8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
 </head>
 <body class="auth-body">
@@ -128,11 +128,11 @@ $email_diisi = isset($_POST['email']) ? e($_POST['email']) : '';
         </div>
 
         <div class="auth-footer">
-            <a href="index.php">&larr; Kembali ke Halaman Utama</a>
+            <a href="index.php" class="btn btn-back" style="width:100%"><i class="ti ti-home"></i> Kembali ke Halaman Utama</a>
         </div>
 
     </div>
 </div>
-<script src="assets/js/ui.js?v=7" defer></script>
+<script src="assets/js/ui.js?v=8" defer></script>
 </body>
 </html>

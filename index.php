@@ -33,8 +33,8 @@ $tahun_beroperasi = (int)date('Y') - 1997;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= e($nama_klinik) ?></title>
-    <link rel="stylesheet" href="assets/css/style.css?v=7">
-<link rel="stylesheet" href="assets/css/theme.css?v=7">
+    <link rel="stylesheet" href="assets/css/style.css?v=8">
+<link rel="stylesheet" href="assets/css/theme.css?v=8">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
 </head>
 <body>
@@ -60,6 +60,10 @@ $tahun_beroperasi = (int)date('Y') - 1997;
         <img src="<?= e($logo) ?>" alt="Logo <?= e($nama_klinik) ?>">
         <?= e($nama_klinik) ?>
     </div>
+
+    <button type="button" class="nav-togol" aria-label="Togol menu">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
 
     <div class="menu-decare">
         <a href="#utama">Laman Utama</a>
@@ -253,6 +257,6 @@ $tahun_beroperasi = (int)date('Y') - 1997;
     </div>
 </div>
 
-<script src="assets/js/ui.js?v=7"></script>
+<script src="assets/js/ui.js?v=8"></script>
 </body>
 </html>

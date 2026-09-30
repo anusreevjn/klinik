@@ -103,8 +103,8 @@ if (isset($_POST['daftar'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Akaun Pesakit - <?= e($nama_klinik) ?></title>
-    <link rel="stylesheet" href="assets/css/style.css?v=7">
-    <link rel="stylesheet" href="assets/css/theme.css?v=7">
+    <link rel="stylesheet" href="assets/css/style.css?v=8">
+    <link rel="stylesheet" href="assets/css/theme.css?v=8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
 </head>
 <body class="auth-body">
@@ -176,11 +176,11 @@ if (isset($_POST['daftar'])) {
 
         <div class="auth-footer">
             <p>Sudah ada akaun? <a href="login.php">Log Masuk</a></p>
-            <p style="margin-top:10px;"><a href="index.php">&larr; Kembali ke Halaman Utama</a></p>
+            <a href="index.php" class="btn btn-back" style="width:100%;margin-top:4px"><i class="ti ti-home"></i> Kembali ke Halaman Utama</a>
         </div>
 
     </div>
 </div>
-<script src="assets/js/ui.js?v=7" defer></script>
+<script src="assets/js/ui.js?v=8" defer></script>
 </body>
 </html>
