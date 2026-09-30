@@ -51,8 +51,8 @@ $logo = '../' . tetapan($conn, 'logo_klinik', 'assets/image/logo.jpg');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resit <?= selamat($data['no_resit']) ?></title>
-    <link rel="stylesheet" href="../assets/css/style.css?v=10">
-<link rel="stylesheet" href="../assets/css/theme.css?v=10">
+    <link rel="stylesheet" href="../assets/css/style.css?v=11">
+<link rel="stylesheet" href="../assets/css/theme.css?v=11">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
 </head>
 <body>
@@ -142,6 +142,6 @@ $logo = '../' . tetapan($conn, 'logo_klinik', 'assets/image/logo.jpg');
         <a class="btn btn-back" href="<?= $peranan === 'pesakit' ? '../pesakit/pembayaran.php' : ($peranan === 'pentadbir' ? '../admin/pembayaran.php' : 'invois.php') ?>">Kembali</a>
     </div>
 </div>
-<script src="../assets/js/ui.js?v=10" defer></script>
+<script src="../assets/js/ui.js?v=11" defer></script>
 </body>
 </html>

@@ -16,7 +16,7 @@ $waktu = [
     'Sabtu' => tetapan($conn, 'waktu_sabtu', '-'),
 ];
 
-$ikon_rawatan = ['R001' => '🦷', 'R002' => '✨', 'R003' => '🪥', 'R004' => '🩹', 'R005' => '🧒', 'R006' => '🔍', 'R007' => '🧪', 'R008' => '👑', 'R009' => '😁', 'R010' => '🩻', 'R011' => '💎', 'R012' => '📐'];
+$ikon_rawatan = ['R001' => 'ti-dental', 'R002' => 'ti-sparkles', 'R003' => 'ti-dental', 'R004' => 'ti-dental-off', 'R005' => 'ti-mood-kid', 'R006' => 'ti-zoom-in', 'R007' => 'ti-test-pipe', 'R008' => 'ti-crown', 'R009' => 'ti-mood-smile', 'R010' => 'ti-radioactive', 'R011' => 'ti-diamond', 'R012' => 'ti-ruler-2'];
 
 $servis = mysqli_query($conn, "SELECT kod_rawatan, nama_rawatan, harga, harga_maksimum FROM kod_rawatan ORDER BY kod_rawatan ASC LIMIT 6");
 
@@ -33,8 +33,8 @@ $tahun_beroperasi = (int)date('Y') - 1997;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= e($nama_klinik) ?></title>
-    <link rel="stylesheet" href="assets/css/style.css?v=10">
-<link rel="stylesheet" href="assets/css/theme.css?v=10">
+    <link rel="stylesheet" href="assets/css/style.css?v=11">
+<link rel="stylesheet" href="assets/css/theme.css?v=11">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
 </head>
 <body>
@@ -126,10 +126,10 @@ $tahun_beroperasi = (int)date('Y') - 1997;
 
         <div class="grid-servis">
             <?php while ($row = mysqli_fetch_assoc($servis)) {
-                $ikon = isset($ikon_rawatan[$row['kod_rawatan']]) ? $ikon_rawatan[$row['kod_rawatan']] : '🦷';
+                $ikon = isset($ikon_rawatan[$row['kod_rawatan']]) ? $ikon_rawatan[$row['kod_rawatan']] : 'ti-dental';
             ?>
                 <div class="kad-servis reveal">
-                    <div class="ikon-servis"><?= $ikon ?></div>
+                    <div class="ikon-servis"><i class="ti <?= e($ikon) ?>" aria-hidden="true"></i></div>
                     <div>
                         <h3><?= e($row['nama_rawatan']) ?></h3>
                         <p class="harga">
@@ -147,45 +147,43 @@ $tahun_beroperasi = (int)date('Y') - 1997;
         <div class="grid-tentang">
             <div class="gambar-tentang reveal">
                 <div class="gigi-pentas">
-                    <svg class="gigi-animasi" viewBox="0 0 200 250" role="img" aria-label="Gigi sihat berkilat">
+                    <svg class="gigi-animasi" viewBox="0 0 200 250" role="img" aria-label="Gigi comel melompat">
                         <defs>
-                            <linearGradient id="gigiBadan" x1="0.2" y1="0" x2="0.8" y2="1">
+                            <linearGradient id="gigiBadan" x1="0.3" y1="0" x2="0.7" y2="1">
                                 <stop offset="0" stop-color="#ffffff"/>
-                                <stop offset="0.55" stop-color="#eef3fb"/>
-                                <stop offset="1" stop-color="#cdddf1"/>
+                                <stop offset="0.6" stop-color="#f3f7fd"/>
+                                <stop offset="1" stop-color="#dbe6f5"/>
                             </linearGradient>
-                            <radialGradient id="gigiGloss" cx="0.36" cy="0.26" r="0.55">
+                            <radialGradient id="gigiGloss" cx="0.36" cy="0.26" r="0.5">
                                 <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
                                 <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
                             </radialGradient>
-                            <linearGradient id="gigiShine" x1="0" y1="0" x2="1" y2="0">
-                                <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
-                                <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.85"/>
-                                <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
-                            </linearGradient>
-                            <clipPath id="gigiClip">
-                                <path d="M100 24 C68 22 44 40 44 74 C44 96 52 112 56 132 C60 150 55 178 66 206 C73 224 86 224 90 204 C93 188 95 168 100 168 C105 168 107 188 110 204 C114 224 127 224 134 206 C145 178 140 150 144 132 C148 112 156 96 156 74 C156 40 132 22 100 24 Z"/>
-                            </clipPath>
-                            <filter id="gigiBlur" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="6"/></filter>
-                            <filter id="gigiSoft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="9"/></filter>
                         </defs>
 
-                        <ellipse class="gigi-bayang" cx="100" cy="234" rx="60" ry="13" fill="#2f6bff" opacity="0.16" filter="url(#gigiSoft)"/>
+                        <ellipse class="gigi-bayang" cx="100" cy="230" rx="52" ry="11" fill="#2f6bff" opacity="0.18"/>
 
-                        <path d="M100 24 C68 22 44 40 44 74 C44 96 52 112 56 132 C60 150 55 178 66 206 C73 224 86 224 90 204 C93 188 95 168 100 168 C105 168 107 188 110 204 C114 224 127 224 134 206 C145 178 140 150 144 132 C148 112 156 96 156 74 C156 40 132 22 100 24 Z" fill="url(#gigiBadan)" stroke="#bccfe8" stroke-width="1.5"/>
+                        <g class="gigi-tubuh">
+                            <path d="M100 20 C66 20 42 40 42 76 C42 104 52 120 58 138 C63 154 58 176 70 200 C77 216 90 214 93 198 C96 184 96 170 100 170 C104 170 104 184 107 198 C110 214 123 216 130 200 C142 176 137 154 142 138 C148 120 158 104 158 76 C158 40 134 20 100 20 Z" fill="url(#gigiBadan)" stroke="#cdd9ea" stroke-width="2"/>
+                            <ellipse cx="74" cy="60" rx="16" ry="26" fill="url(#gigiGloss)"/>
 
-                        <g clip-path="url(#gigiClip)">
-                            <path d="M132 30 C150 44 152 66 150 86 C148 108 140 126 142 150 C144 176 138 196 128 212 L156 212 L162 20 Z" fill="#c2d3ec" opacity="0.55" filter="url(#gigiBlur)"/>
-                            <ellipse cx="78" cy="78" rx="26" ry="44" fill="url(#gigiGloss)"/>
-                            <ellipse cx="66" cy="150" rx="9" ry="22" fill="#ffffff" opacity="0.55"/>
-                            <rect class="gigi-streak" x="-30" y="-40" width="42" height="330" fill="url(#gigiShine)"/>
+                            <circle class="gigi-pipi" cx="66" cy="118" r="7" fill="#ff9bb3" opacity="0.65"/>
+                            <circle class="gigi-pipi" cx="134" cy="118" r="7" fill="#ff9bb3" opacity="0.65"/>
+
+                            <g class="gigi-mata">
+                                <circle cx="80" cy="100" r="8.5" fill="#22315a"/>
+                                <circle cx="120" cy="100" r="8.5" fill="#22315a"/>
+                                <circle cx="83" cy="96.5" r="2.6" fill="#fff"/>
+                                <circle cx="123" cy="96.5" r="2.6" fill="#fff"/>
+                            </g>
+
+                            <path class="gigi-senyum" d="M82 118 Q100 134 118 118" fill="none" stroke="#22315a" stroke-width="4.5" stroke-linecap="round"/>
                         </g>
 
-                        <g class="kilau" transform="translate(154 46)">
-                            <path d="M0 -13 L3.2 -3.2 L13 0 L3.2 3.2 L0 13 L-3.2 3.2 L-13 0 L-3.2 -3.2 Z" fill="#ffffff"/>
+                        <g class="kilau" transform="translate(158 48)">
+                            <path d="M0 -13 L3.2 -3.2 L13 0 L3.2 3.2 L0 13 L-3.2 3.2 L-13 0 L-3.2 -3.2 Z" fill="#22c3e6"/>
                         </g>
-                        <g class="kilau kilau-2" transform="translate(42 40)">
-                            <path d="M0 -8 L2 -2 L8 0 L2 2 L0 8 L-2 2 L-8 0 L-2 -2 Z" fill="#8fb6ff"/>
+                        <g class="kilau kilau-2" transform="translate(40 44)">
+                            <path d="M0 -8 L2 -2 L8 0 L2 2 L0 8 L-2 2 L-8 0 L-2 -2 Z" fill="#4f8cff"/>
                         </g>
                     </svg>
                 </div>
@@ -299,6 +297,6 @@ $tahun_beroperasi = (int)date('Y') - 1997;
     </div>
 </div>
 
-<script src="assets/js/ui.js?v=10"></script>
+<script src="assets/js/ui.js?v=11"></script>
 </body>
 </html>

@@ -51,8 +51,8 @@ $inisial = strtoupper(substr($nama_parts[0], 0, 1) . (isset($nama_parts[1]) ? su
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rekod Rawatan - Klinik Pergigian Dr. Arifin</title>
-    <link rel="stylesheet" href="../assets/css/style.css?v=10">
-<link rel="stylesheet" href="../assets/css/theme.css?v=10">
+    <link rel="stylesheet" href="../assets/css/style.css?v=11">
+<link rel="stylesheet" href="../assets/css/theme.css?v=11">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
     
     <style>
@@ -526,6 +526,6 @@ $inisial = strtoupper(substr($nama_parts[0], 0, 1) . (isset($nama_parts[1]) ? su
     }
 </script>
 
-<script src="../assets/js/ui.js?v=10" defer></script>
+<script src="../assets/js/ui.js?v=11" defer></script>
 </body>
 </html>

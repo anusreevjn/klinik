@@ -530,7 +530,8 @@ select.form-control{appearance:none;-webkit-appearance:none;padding-right:2.6rem
 .sel-gigi{border:1px solid var(--c-border-strong);border-radius:5px}
 
 .kad-servis{display:flex;gap:.8rem;align-items:flex-start}
-.ikon-servis{flex:0 0 42px;width:42px;height:42px;display:grid;place-items:center;border-radius:10px;background:var(--c-primary-lt);color:var(--c-primary);font-size:1.15rem;transition:background .2s var(--ease)}
+.ikon-servis{flex:0 0 46px;width:46px;height:46px;display:grid;place-items:center;border-radius:12px;background:var(--c-primary-lt);color:var(--c-primary);transition:background .2s var(--ease)}
+.ikon-servis i{font-size:1.5rem;line-height:1}
 .kad-servis:hover .ikon-servis{background:var(--c-primary);color:#fff;transform:none}
 .kad-servis .harga{font-weight:700;color:var(--c-primary);font-size:.85rem;margin:0}
 
@@ -544,14 +545,30 @@ select.form-control{appearance:none;-webkit-appearance:none;padding-right:2.6rem
 .auth-footer a.btn,.auth-footer a.btn:hover,.auth-footer a.btn-back,.auth-footer a.btn-back:hover,.auth-links a.btn,.auth-links a.btn:hover{text-decoration:none}
 
 .gigi-pentas{display:flex;align-items:center;justify-content:center;width:100%;height:100%;min-height:340px;padding:18px}
-.gigi-animasi{width:min(280px,74%);height:auto;overflow:visible;animation:gigiBob 5s ease-in-out infinite;transform-origin:50% 62%}
-@keyframes gigiBob{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-14px) rotate(1.5deg)}}
-.gigi-animasi .gigi-streak{animation:gigiSweep 3.4s ease-in-out infinite}
-@keyframes gigiSweep{0%{transform:translateX(-30px) rotate(14deg)}55%,100%{transform:translateX(210px) rotate(14deg)}}
+.gigi-animasi{width:min(270px,72%);height:auto;overflow:visible;filter:drop-shadow(0 16px 26px rgba(47,107,255,.18))}
+
+.gigi-animasi .gigi-tubuh{animation:gigiLompat 1.9s cubic-bezier(.5,.05,.4,1) infinite;transform-box:fill-box;transform-origin:50% 100%}
+@keyframes gigiLompat{
+    0%{transform:translateY(0) scale(1,1)}
+    12%{transform:translateY(4px) scale(1.09,.9)}
+    32%{transform:translateY(-34px) scale(.93,1.08)}
+    54%{transform:translateY(-34px) scale(.97,1.03)}
+    74%{transform:translateY(4px) scale(1.1,.88)}
+    88%{transform:translateY(0) scale(.99,1.02)}
+    100%{transform:translateY(0) scale(1,1)}
+}
+
+.gigi-animasi .gigi-bayang{animation:gigiBayang 1.9s cubic-bezier(.5,.05,.4,1) infinite;transform-box:fill-box;transform-origin:center}
+@keyframes gigiBayang{0%,100%{transform:scale(1);opacity:.2}32%,54%{transform:scale(.62);opacity:.1}74%{transform:scale(1.08);opacity:.22}}
+
+.gigi-animasi .gigi-mata{animation:gigiKedip 3.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes gigiKedip{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.12)}}
+
 .gigi-animasi .kilau{animation:gigiKilau 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
 .gigi-animasi .kilau-2{animation-delay:1.2s}
 @keyframes gigiKilau{0%,100%{opacity:.2;transform:scale(.6) rotate(0deg)}50%{opacity:1;transform:scale(1.2) rotate(30deg)}}
-@media(prefers-reduced-motion:reduce){.gigi-animasi,.gigi-animasi .gigi-streak,.gigi-animasi .kilau{animation:none}}
+
+@media(prefers-reduced-motion:reduce){.gigi-animasi *{animation:none !important}}
 
 .hero-visual{flex-direction:column}
 .kad-terapung{position:static;right:auto;bottom:auto;margin:18px auto 0;width:fit-content}
