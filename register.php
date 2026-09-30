@@ -15,6 +15,15 @@ $nilai = [
     'alamat' => '',
 ];
 
+$tempah = [
+    'jenis' => trim($_POST['tempah_jenis'] ?? $_GET['jenis_rawatan'] ?? ''),
+    'tarikh' => trim($_POST['tempah_tarikh'] ?? $_GET['tarikh'] ?? ''),
+];
+
+if (!isset($_POST['daftar'])) {
+    $nilai['nama'] = trim($_GET['nama'] ?? '');
+}
+
 if (isset($_POST['daftar'])) {
 
     $nilai['nama'] = trim($_POST['nama'] ?? '');
@@ -87,7 +96,26 @@ if (isset($_POST['daftar'])) {
                 mulakan_sesi_pengguna($id_baru, 'pesakit', $nilai['nama'], false);
                 audit($conn, 'daftar_pesakit', $id_baru, 'pesakit');
 
-                header("Location: pesakit/dashboard.php");
+                $pergi = 'pesakit/dashboard.php';
+
+                if ($tempah['jenis'] !== '' && $tempah['tarikh'] !== '' && strtotime($tempah['tarikh']) !== false && $tempah['tarikh'] >= date('Y-m-d')) {
+                    $stmt_tj = mysqli_prepare($conn, "INSERT INTO temu_janji (id_pesakit, id_doktor, tarikh_temu_janji, masa_temu_janji, no_giliran, status, jenis_rawatan) VALUES (?, NULL, ?, NULL, NULL, 'Menunggu', ?)");
+                    mysqli_stmt_bind_param($stmt_tj, "iss", $id_baru, $tempah['tarikh'], $tempah['jenis']);
+                    if (mysqli_stmt_execute($stmt_tj)) {
+                        $id_tj = mysqli_insert_id($conn);
+                        mysqli_stmt_close($stmt_tj);
+                        audit($conn, 'temu_janji_dimohon', $id_tj, $tempah['tarikh']);
+                        $staf = mysqli_query($conn, "SELECT id_kakitangan FROM kakitangan WHERE status_aktif = 'Aktif'");
+                        while ($s = mysqli_fetch_assoc($staf)) {
+                            hantar_notifikasi($conn, 'kakitangan', (int)$s['id_kakitangan'], 'Permohonan temu janji baharu', 'Ada permohonan temu janji pada ' . date('d/m/Y', strtotime($tempah['tarikh'])) . ' menunggu kelulusan.', 'temujanji', 'appointment_manage.php');
+                        }
+                        $pergi = 'pesakit/appointment_saya.php?tempah=ok';
+                    } else {
+                        mysqli_stmt_close($stmt_tj);
+                    }
+                }
+
+                header("Location: " . $pergi);
                 exit();
             }
 
@@ -103,8 +131,8 @@ if (isset($_POST['daftar'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Akaun Pesakit - <?= e($nama_klinik) ?></title>
-    <link rel="stylesheet" href="assets/css/style.css?v=11">
-    <link rel="stylesheet" href="assets/css/theme.css?v=11">
+    <link rel="stylesheet" href="assets/css/style.css?v=12">
+    <link rel="stylesheet" href="assets/css/theme.css?v=12">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
 </head>
 <body class="auth-body">
@@ -119,6 +147,15 @@ if (isset($_POST['daftar'])) {
         <?php } ?>
 
         <form method="POST"><?= csrf_field() ?>
+
+            <?php if ($tempah['jenis'] !== '' || $tempah['tarikh'] !== '') { ?>
+                <input type="hidden" name="tempah_jenis" value="<?= e($tempah['jenis']) ?>">
+                <input type="hidden" name="tempah_tarikh" value="<?= e($tempah['tarikh']) ?>">
+                <div class="alert" style="background:var(--c-primary-lt);color:var(--c-primary-dark);border-left-color:var(--c-primary)">
+                    <b>Temu janji pilihan anda:</b> <?= e($tempah['jenis'] ?: 'Rawatan') ?><?= $tempah['tarikh'] ? ' pada ' . e(date('d/m/Y', strtotime($tempah['tarikh']))) : '' ?>.<br>
+                    Lengkapkan pendaftaran di bawah dan temu janji anda akan dihantar terus untuk kelulusan.
+                </div>
+            <?php } ?>
 
             <div class="form-group">
                 <label for="nama">Nama Penuh <span style="color:var(--bad)">*</span></label>
@@ -181,6 +218,6 @@ if (isset($_POST['daftar'])) {
 
     </div>
 </div>
-<script src="assets/js/ui.js?v=11" defer></script>
+<script src="assets/js/ui.js?v=12" defer></script>
 </body>
 </html>

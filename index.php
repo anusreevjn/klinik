@@ -20,6 +20,10 @@ $ikon_rawatan = ['R001' => 'ti-dental', 'R002' => 'ti-sparkles', 'R003' => 'ti-d
 
 $servis = mysqli_query($conn, "SELECT kod_rawatan, nama_rawatan, harga, harga_maksimum FROM kod_rawatan ORDER BY kod_rawatan ASC LIMIT 6");
 
+$jenis_res = mysqli_query($conn, "SELECT nama_rawatan FROM kod_rawatan ORDER BY kod_rawatan ASC");
+$senarai_jenis = [];
+while ($jr = mysqli_fetch_assoc($jenis_res)) { $senarai_jenis[] = $jr['nama_rawatan']; }
+
 $stat = mysqli_query($conn, "SELECT
         (SELECT COUNT(*) FROM pesakit) AS pesakit,
         (SELECT COUNT(*) FROM doktor WHERE status_aktif = 'Aktif') AS doktor,
@@ -33,8 +37,8 @@ $tahun_beroperasi = (int)date('Y') - 1997;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= e($nama_klinik) ?></title>
-    <link rel="stylesheet" href="assets/css/style.css?v=11">
-<link rel="stylesheet" href="assets/css/theme.css?v=11">
+    <link rel="stylesheet" href="assets/css/style.css?v=12">
+<link rel="stylesheet" href="assets/css/theme.css?v=12">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
 </head>
 <body>
@@ -212,23 +216,28 @@ $tahun_beroperasi = (int)date('Y') - 1997;
 </div>
 
 <div class="seksyen">
-    <div class="bar-tempahan reveal">
+    <form class="bar-tempahan reveal" method="get" action="register.php">
         <div>
             <label>Nama Anda</label>
-            <input type="text" class="form-control" placeholder="Nama penuh" disabled>
+            <input type="text" name="nama" class="form-control" placeholder="Nama penuh" required>
         </div>
         <div>
             <label>Jenis Rawatan</label>
-            <input type="text" class="form-control" placeholder="Contoh Scaling" disabled>
+            <select name="jenis_rawatan" class="form-control" required>
+                <option value="">Pilih rawatan</option>
+                <?php foreach ($senarai_jenis as $j) { ?>
+                    <option value="<?= e($j) ?>"><?= e($j) ?></option>
+                <?php } ?>
+            </select>
         </div>
         <div>
             <label>Tarikh Pilihan</label>
-            <input type="text" class="form-control" placeholder="Pilih tarikh" disabled>
+            <input type="date" name="tarikh" class="form-control" min="<?= date('Y-m-d') ?>" required>
         </div>
         <div>
-            <a class="btn btn-putih btn-panah" href="register.php">Tempah Sekarang <span>→</span></a>
+            <button type="submit" class="btn btn-putih btn-panah">Tempah Sekarang <span>→</span></button>
         </div>
-    </div>
+    </form>
 </div>
 
 <div class="seksyen lembut" id="hubungi">
@@ -297,6 +306,6 @@ $tahun_beroperasi = (int)date('Y') - 1997;
     </div>
 </div>
 
-<script src="assets/js/ui.js?v=11"></script>
+<script src="assets/js/ui.js?v=12"></script>
 </body>
 </html>
