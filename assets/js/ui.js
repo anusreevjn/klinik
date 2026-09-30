@@ -15,49 +15,46 @@
         var sidebar = document.querySelector('.sidebar');
         var dashboard = document.querySelector('.dashboard');
         var toggles = document.querySelectorAll('.menu-btn');
-        if (!sidebar || !toggles.length) return;
+        if (!sidebar || !dashboard || !toggles.length) return;
 
-        // Guna matchMedia supaya JS dan CSS guna breakpoint yang sama (992px),
-        // elak percanggahan sebab window.innerWidth mengira lebar scrollbar.
+        // Guna breakpoint yang sama dengan CSS (992px).
         var mq = window.matchMedia('(min-width: 992px)');
 
         var backdrop = document.createElement('div');
         backdrop.className = 'sidebar-backdrop';
         document.body.appendChild(backdrop);
 
-        function tutupMobile() {
-            sidebar.classList.remove('open');
-            backdrop.classList.remove('show');
+        // Sembunyi/papar SENTIASA guna kelas 'sidebar-tutup' (display:none)
+        // supaya ia tidak pernah gagal, tidak kira saiz skrin.
+        function sedangBuka() {
+            return !dashboard.classList.contains('sidebar-tutup');
+        }
+
+        function papar(buka) {
+            dashboard.classList.toggle('sidebar-tutup', !buka);
+            // Backdrop hanya untuk skrin kecil bila sidebar dibuka (bertindih).
+            backdrop.classList.toggle('show', buka && !mq.matches);
         }
 
         toggles.forEach(function (btn) {
             btn.addEventListener('click', function (e) {
                 if (btn.tagName === 'A' && btn.getAttribute('href')) return;
                 e.preventDefault();
-                if (mq.matches) {
-                    tutupMobile();
-                    if (dashboard) dashboard.classList.toggle('sidebar-tutup');
-                } else {
-                    if (dashboard) dashboard.classList.remove('sidebar-tutup');
-                    sidebar.classList.toggle('open');
-                    backdrop.classList.toggle('show');
-                }
+                papar(!sedangBuka());
             });
         });
 
-        backdrop.addEventListener('click', tutupMobile);
+        backdrop.addEventListener('click', function () { papar(false); });
 
-        var bilaTukar = function () {
-            if (mq.matches) {
-                tutupMobile();
-            } else if (dashboard) {
-                dashboard.classList.remove('sidebar-tutup');
-            }
-        };
+        // Default: papar pada desktop, sembunyi pada skrin kecil.
+        function terapDefault() {
+            papar(mq.matches);
+        }
+        terapDefault();
         if (mq.addEventListener) {
-            mq.addEventListener('change', bilaTukar);
+            mq.addEventListener('change', terapDefault);
         } else if (mq.addListener) {
-            mq.addListener(bilaTukar);
+            mq.addListener(terapDefault);
         }
     }
 

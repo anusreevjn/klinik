@@ -562,17 +562,14 @@ html,body{overflow-x:clip}
         position:fixed;
         top:0;
         left:0;
+        height:100vh;
         z-index:60;
         width:270px;
         flex:none;
-        transform:translateX(-102%);
-        transition:transform .25s var(--ease);
         box-shadow:var(--shadow-lg);
     }
-.sidebar.open{transform:none}
 .main{padding:16px 14px 36px;width:100%}
 .topbar{margin:-16px -14px 16px;padding:.6rem .8rem}
-    .jaket-topbar-btn{display:inline-flex}
 }
 
 @media(max-width:600px){
